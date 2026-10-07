@@ -1,0 +1,437 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Loop Lab · AP Computer Science A</title>
+<style>
+:root{--ink:#192c35;--muted:#50616c;--paper:#f5f6f2;--line:#d7dfdd;--teal:#09665f;--lime:#d9f38b;--orange:#ffcd9f;--code:#15252e;--white:#fff;--red:#a92e27}
+*{box-sizing:border-box}body{margin:0;font-family:system-ui,-apple-system,"Segoe UI",sans-serif;background:var(--paper);color:var(--ink);font-size:15px;line-height:1.55}button,input,select,textarea{font:inherit}button{cursor:pointer}button:disabled{cursor:default;opacity:.55}button,input,select{border-radius:8px}button{border:1px solid var(--line);padding:9px 14px;background:white;color:var(--ink);font-weight:650}button:hover:not(:disabled){border-color:var(--teal);background:#eef5f1}button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,summary:focus-visible{outline:3px solid #cd6507;outline-offset:3px}textarea:focus-visible{outline:3px solid var(--lime);outline-offset:-3px}.skip{position:absolute;top:-80px;background:white;padding:15px;z-index:10}.skip:focus{top:12px;left:20px}header{background:white;border-bottom:1px solid var(--line);padding:20px 4vw;display:flex;align-items:center;justify-content:space-between;gap:20px}.brand{display:flex;gap:14px;align-items:center}.mark{flex:none;white-space:nowrap;display:grid;place-items:center;width:48px;height:48px;border-radius:14px;background:var(--teal);color:var(--lime);font:700 26px ui-monospace,monospace}.brand strong{font-size:24px;letter-spacing:-1px}.eyebrow{font-size:11px;font-weight:750;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted)}.brand p{margin:0;font-size:12px;color:var(--muted)}.header-actions{display:flex;align-items:center;gap:16px}.progress-text{font-size:13px;color:var(--muted)}#progress{accent-color:var(--teal);width:110px;height:7px;display:block;margin-top:6px}.intro{max-width:1560px;margin:auto;padding:30px 4vw 24px;display:flex;justify-content:space-between;align-items:end;gap:25px}.intro h1{font-size:32px;line-height:1.15;letter-spacing:-1px;margin:5px 0 8px}.intro p{margin:0;color:var(--muted)}.small-tag{white-space:nowrap;font-size:12px;font-weight:700;border:1px solid var(--line);padding:7px 12px;border-radius:30px;background:white}.workspace{max-width:1560px;margin:auto;padding:0 4vw 36px;display:grid;grid-template-columns:245px minmax(0,1fr);gap:24px}aside{align-self:start;background:white;border:1px solid var(--line);border-radius:14px;padding:18px 12px}aside h2{font-size:13px;margin:0 6px 12px}#filter{width:100%;padding:9px;margin-bottom:15px;background:var(--paper);border:1px solid var(--line)}.group-name{font-size:10px;letter-spacing:1px;text-transform:uppercase;font-weight:750;color:var(--muted);margin:16px 7px 8px}.task-nav{display:flex;gap:9px;width:100%;text-align:left;padding:10px 8px;border:0;background:transparent;font-size:13px;font-weight:500;line-height:1.4;margin:2px 0}.task-nav[aria-current="true"]{background:#e4f0e9;color:#074f48;font-weight:750}.nav-num{flex:0 0 21px;text-align:center;font-size:11px;background:#eef1ef;border-radius:5px;padding:1px;height:23px}.nav-num.done{background:var(--lime);color:#233623}.content{min-width:0}.prompt{background:white;border:1px solid var(--line);border-radius:14px;padding:24px;margin-bottom:18px}.prompt-head{display:flex;justify-content:space-between;align-items:center;gap:15px}.badge{background:#edf3e7;color:#3c572c;padding:4px 10px;border-radius:20px;font-size:11px;font-weight:700}.prompt h2{margin:12px 0 10px;font-size:25px;letter-spacing:-.6px;line-height:1.25}.prompt p{margin:8px 0;color:var(--muted)}.examples{display:flex;flex-wrap:wrap;gap:10px;margin:17px 0 12px}.example{padding:10px 13px;background:var(--paper);border:1px solid #e0e6df;border-radius:8px;flex:1;min-width:180px;font-size:12px}.example code{overflow-wrap:anywhere;white-space:pre-wrap}.example .expected{display:block;margin-top:5px;color:var(--teal);font-weight:650}.hint-actions{display:flex;gap:10px;align-items:center;flex-wrap:wrap}.hint-actions button{font-size:12px;padding:6px 10px}#hint-box{border-left:3px solid #d47725;background:#fff6ed;padding:12px 15px;margin-top:12px;color:#69441f}.lab{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);gap:18px;align-items:start}.editor-panel{background:var(--code);border-radius:14px;overflow:hidden;min-width:0;border:1px solid var(--code)}.panel-bar{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:13px 16px}.editor-panel .panel-bar{color:#dbe6e9;border-bottom:1px solid #3a4b54;font-size:12px}.editor-panel button{background:#203843;color:#e0ecef;border-color:#50626d;padding:5px 9px;font-size:11px}.editor-panel button:hover:not(:disabled){background:#2e4c57;border-color:var(--lime)}.dot{display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--lime);margin-right:7px}.method-line{font:12px/1.6 ui-monospace,"Cascadia Code",Consolas,monospace;color:#9cd3cf;padding:14px 16px;overflow-x:auto;white-space:pre;border-bottom:1px solid #2b3b44}.closing{border-top:1px solid #2b3b44;border-bottom:0;padding:5px 16px}.editor-wrap{position:relative;display:flex;min-height:320px}.gutter{width:45px;flex:none;overflow:hidden;margin:0;padding:14px 8px 14px 0;text-align:right;user-select:none;color:#879aa5;font:14px/24px ui-monospace,"Cascadia Code",Consolas,monospace;background:#12212a}#code{display:block;resize:vertical;border:0;border-radius:0;width:calc(100% - 45px);min-height:320px;height:340px;padding:14px 16px;color:#f0f4ed;background:var(--code);font:14px/24px ui-monospace,"Cascadia Code",Consolas,monospace;tab-size:4;white-space:pre;overflow:auto;caret-color:var(--lime)}.editor-options{display:flex;gap:12px;flex-wrap:wrap;padding:9px 14px;color:#bccbd1;font-size:11px;border-top:1px solid #3a4b54}.editor-options label{display:flex;align-items:center;gap:5px}.editor-options input{accent-color:var(--lime)}.run-bar{padding:14px;background:white;display:flex;gap:8px;align-items:center;flex-wrap:wrap}.run-bar button{font-size:13px}.primary{background:var(--teal);color:white;border-color:var(--teal)}.primary:hover:not(:disabled){background:#07534d;color:white}.run-bar .primary{background:var(--lime);color:#263727;border-color:var(--lime);padding:10px 17px}.run-bar .primary:hover:not(:disabled){background:#c7e777;color:#263727}.run-bar select{padding:8px;border:1px solid var(--line);max-width:150px;font-size:12px}.run-bar .stop{background:#fff0ed;color:var(--red);border-color:#d8aaa3}.shortcut{font-size:10px;color:var(--muted);width:100%}.feedback{background:white;border:1px solid var(--line);border-radius:14px;overflow:hidden;min-width:0}.feedback .panel-bar{border-bottom:1px solid var(--line);font-size:12px}.tab{border:0;padding:7px 10px;font-size:12px}.tab[aria-selected="true"]{background:#e4f0e9;color:var(--teal)}.feedback-body{padding:17px;min-height:375px}.status{padding:12px;border-radius:8px;background:#f1f4ee;border:1px solid #e0e7db;font-size:13px;margin:0 0 15px;white-space:pre-wrap;overflow-wrap:anywhere}.status.good{background:#eef7db;border-color:#c1d490;color:#355022}.status.bad{background:#fff2ed;border-color:#e6c0ae;color:#83382c}.result-row{padding:11px 0;border-bottom:1px solid #e7ece7;font-size:12px}.result-heading{display:flex;justify-content:space-between;gap:10px;font-weight:700}.result-row code{display:block;font-size:11px;margin:5px 0;white-space:pre-wrap;overflow-wrap:anywhere}.result-row details summary{font-size:11px;color:var(--teal);cursor:pointer}.result-row pre{background:#f4f6f2;padding:9px;white-space:pre-wrap;overflow-wrap:anywhere;font:12px/1.6 ui-monospace,Consolas,monospace;margin:6px 0}.check{color:#34651e}.miss{color:var(--red)}.trace-select{width:100%;padding:7px;border:1px solid var(--line);margin:7px 0 12px;background:white}.trace-control{display:flex;gap:8px;align-items:center}.trace-control button{font-size:12px;padding:5px 10px}#trace-slider{width:100%;accent-color:var(--teal);margin:14px 0}.trace-line{font-size:13px;font-weight:650;color:var(--teal)}table{width:100%;border-collapse:collapse;font-size:12px}th,td{text-align:left;padding:7px 9px;border-bottom:1px solid var(--line);overflow-wrap:anywhere}th{background:#f1f4ee}td{font-family:ui-monospace,Consolas,monospace}#trace-output{font-size:12px;white-space:pre-wrap;overflow-wrap:anywhere;background:#f5f6f2;padding:10px;max-height:150px;overflow:auto}.custom{background:white;border:1px solid var(--line);border-radius:14px;padding:18px 22px;margin-top:18px}.custom summary{font-size:13px;font-weight:700;cursor:pointer}.custom p{font-size:12px;color:var(--muted)}#custom-fields{display:flex;gap:12px;flex-wrap:wrap;margin:14px 0}#custom-fields label{flex:1;min-width:130px;font-size:12px;font-weight:650}#custom-fields input{display:block;width:100%;margin-top:5px;padding:9px;border:1px solid #bac8c5}#custom-error{font-size:12px;color:var(--red);white-space:pre-wrap}.reference{background:white;border:1px solid var(--line);border-radius:14px;padding:18px 22px;margin-top:18px;font-size:13px}.reference summary{font-weight:700;cursor:pointer}.reference pre{background:var(--paper);padding:13px;overflow:auto;font-size:12px;line-height:1.8}.reference p{color:var(--muted)}.bottom-nav{display:flex;justify-content:space-between;margin-top:20px;gap:10px}footer{border-top:1px solid var(--line);padding:20px 4vw;color:var(--muted);font-size:11px;max-width:1560px;margin:auto}footer p{margin:4px 0}code,pre{font-family:ui-monospace,"Cascadia Code",Consolas,monospace}a{color:var(--teal)}[hidden]{display:none!important}#reset-dialog{padding:12px 16px;background:#fff4e9;font-size:12px}#reset-dialog button{margin:5px}.storage-message{color:#8e4128;font-size:12px;padding:0 4vw}.print-note{display:none}
+@media(min-width:1450px){#code{height:400px}.feedback-body{min-height:435px}}
+@media(max-width:1150px){.workspace{grid-template-columns:210px minmax(0,1fr);gap:16px}.lab{grid-template-columns:1fr}.feedback-body{min-height:180px}.intro h1{font-size:29px}}
+@media(max-width:720px){header{padding:15px 20px;align-items:start}.header-actions{gap:8px;flex-direction:column;align-items:end}.header-actions button{font-size:11px}.brand strong{font-size:21px}.mark{width:38px;height:38px;font-size:20px}.intro{padding:22px 20px;display:block}.intro .small-tag{display:inline-block;margin-top:14px}.workspace{padding:0 20px 24px;display:block}aside{margin-bottom:16px}#task-list{max-height:190px;overflow:auto}.prompt{padding:18px}.prompt h2{font-size:22px}.lab{gap:15px}.method-line{font-size:11px}.editor-options{font-size:10px}.intro h1{font-size:27px}#code{font-size:13px;padding-left:10px}.gutter{width:35px}footer{padding:18px 20px}}
+@media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important}}
+.header-actions{flex-wrap:wrap;justify-content:flex-end}.print-controls{display:flex;align-items:end;gap:8px}.print-controls label{font-size:11px;font-weight:650}.print-controls input{display:block;width:170px;padding:9px 10px;border:1px solid var(--line);margin-top:3px;background:white}.print-controls button{white-space:nowrap}.print-summary{display:none}
+@media(max-width:1000px){header{align-items:start}.header-actions{max-width:460px;gap:10px}}
+@media(max-width:720px){header{flex-wrap:wrap}.header-actions{width:100%;max-width:none;flex-direction:row;justify-content:space-between;align-items:center}.print-controls{width:100%}.print-controls label{flex:1}.print-controls input{width:100%}}
+@media print{
+ @page{size:letter;margin:.6in}
+ body{background:white;color:black;font-size:11pt;line-height:1.3}
+ body> :not(#print-summary){display:none!important}
+ #print-summary{display:block!important;max-width:none;margin:0;padding:0;color:black}
+ #print-summary h1{font-size:23pt;margin:0 0 4pt}
+ #print-summary .print-course{font-size:10pt;margin:0 0 20pt}
+ #print-summary .print-name{font-size:15pt;font-weight:700;overflow-wrap:anywhere;margin:0 0 9pt}
+ #print-summary .print-total{font-size:12pt;margin:0 0 13pt}
+ #print-summary table{font-size:10pt;width:100%;border-collapse:collapse}
+ #print-summary th,#print-summary td{padding:4pt 7pt;border-bottom:1px solid #bbb;text-align:left;font-family:Arial,sans-serif;color:black;line-height:1.25}
+ #print-summary th{background:none;border-top:1px solid #555;border-bottom:2px solid #555}
+ #print-summary tr{break-inside:avoid}
+ #print-summary td:last-child{width:100pt;white-space:nowrap}
+ #print-summary .print-finished{font-weight:700}
+ #print-summary .print-footnote{font-size:9pt;margin-top:13pt;color:#333}
+}
+</style>
+</head>
+<body>
+<a class="skip" href="#task-title">Skip to the exercise</a>
+<header><div class="brand"><span class="mark" aria-hidden="true">{ }</span><div><strong>Loop Lab</strong><p>AP Computer Science A</p></div></div><div class="header-actions"><div class="progress-text"><span id="progress-label">0 of 20 checked</span><progress id="progress" value="0" max="20" aria-label="Exercises passing their checks"></progress></div><button id="export">Download practice summary</button><div class="print-controls"><label for="student-name">Your name<input id="student-name" type="text" maxlength="100" autocomplete="off" placeholder="Enter your name" required></label><button id="print-summary-button">Print summary</button></div></div></header>
+<div class="intro"><div><div class="eyebrow">Write · run · inspect · revise</div><h1>Small loops. Stronger thinking.</h1><p>Build your algorithm one pass at a time. No arrays needed.</p></div><span class="small-tag">20 exercises · Java loop practice</span></div>
+<p id="storage-message" class="storage-message" role="status" hidden></p>
+<main class="workspace">
+<aside aria-label="Choose an exercise"><h2>Your practice path</h2><label class="eyebrow" for="filter">Show exercises</label><select id="filter"><option value="all">All exercises</option><option>Loop foundations</option><option>String algorithms</option><option>Nested loops</option></select><nav id="task-list" aria-label="Exercises"></nav></aside>
+<div class="content">
+ <section class="prompt" aria-labelledby="task-title"><div class="prompt-head"><span id="task-number" class="eyebrow"></span><span id="task-level" class="badge"></span></div><h2 id="task-title" tabindex="-1"></h2><p id="task-desc"></p><div id="examples" class="examples"></div><div class="hint-actions"><button id="hint">Show a hint</button><span id="hint-count" class="progress-text">Optional support, one hint at a time.</span></div><div id="hint-box" hidden></div></section>
+ <div class="lab">
+  <section class="editor-panel" aria-label="Java code editor"><div class="panel-bar"><span><span class="dot" aria-hidden="true"></span>Method body · Java</span><button id="reset">Reset code</button></div><div id="reset-dialog" hidden>Replace this exercise’s code with its starter?<br><button id="reset-confirm">Replace code</button><button id="reset-cancel">Keep my code</button></div><div id="signature" class="method-line"></div><div class="editor-wrap"><pre id="gutter" class="gutter" aria-hidden="true">1</pre><textarea id="code" aria-label="Java method body" aria-describedby="editor-help" wrap="off" spellcheck="false" autocapitalize="off" autocomplete="off" autocorrect="off"></textarea></div><div class="method-line closing">}</div><div class="editor-options"><label><input id="pair-braces" type="checkbox" checked>Close braces automatically</label><label><input id="auto-indent" type="checkbox" checked>Auto-indent</label><label><input id="tab-indent" type="checkbox" checked>Tab indents</label></div><div class="run-bar"><button id="run" class="primary">▶ Run checks</button><button id="stop" class="stop" hidden>Stop</button><label for="loop-choice" class="eyebrow">Practice with</label><select id="loop-choice"><option value="either">Either loop</option><option value="for">for loops</option><option value="while">while loops</option></select><span id="editor-help" class="shortcut">Write only the body. Ctrl / ⌘ + Enter runs. Esc, then Tab moves out of the editor.</span></div></section>
+  <section class="feedback" aria-label="Run results"><div class="panel-bar"><span>Check your thinking</span><div role="tablist" aria-label="Feedback views"><button id="output-tab" class="tab" role="tab" aria-selected="true" aria-controls="output-panel">Results</button><button id="trace-tab" class="tab" role="tab" aria-selected="false" aria-controls="trace-panel" tabindex="-1">Trace</button></div></div><div class="feedback-body"><div id="status" class="status" role="status" aria-live="polite">Write a loop, then run the checks. Start with a small input and watch what changes.</div><div id="output-panel" role="tabpanel" aria-labelledby="output-tab"><div id="results"></div></div><div id="trace-panel" role="tabpanel" aria-labelledby="trace-tab" hidden><label for="trace-case">Trace a test input</label><select id="trace-case" class="trace-select"></select><div id="trace-empty">Run your code to inspect the executed lines and variable values.</div><div id="trace-view" hidden><div class="trace-control"><button id="trace-prev" aria-label="Previous trace step">←</button><span id="trace-count" class="progress-text"></span><button id="trace-next" aria-label="Next trace step">→</button></div><label class="eyebrow" for="trace-slider">Execution step</label><input id="trace-slider" type="range" min="0" max="0" value="0"><p id="trace-line" class="trace-line"></p><table><caption class="eyebrow">Variables at this step</caption><thead><tr><th scope="col">Variable</th><th scope="col">Value</th></tr></thead><tbody id="trace-vars"></tbody></table><p class="eyebrow">Printed output so far</p><pre id="trace-output"></pre><p id="trace-note" class="progress-text"></p></div></div></div></section>
+ </div>
+ <details class="custom"><summary>Try your own input</summary><p>Strings are entered without quotation marks. Try an empty string, a boundary value, or an input that might expose an off-by-one error. Custom runs do not mark an exercise complete.</p><div id="custom-fields"></div><button id="custom-run">Run custom input</button><p id="custom-error" role="status"></p></details>
+ <details class="reference"><summary>Loop and String reference</summary><p>A loop needs a starting state, a condition, and an update that moves toward stopping. Keep your accumulator outside the loop when it must survive across passes.</p><pre>for (int i = START; CONDITION; UPDATE) {
+    // One pass of the algorithm
+}
+
+int i = START;
+while (CONDITION) {
+    // One pass of the algorithm
+    // UPDATE must move toward stopping
+}</pre><table><thead><tr><th scope="col">Java expression</th><th scope="col">Meaning</th></tr></thead><tbody><tr><td>str.length()</td><td>Number of characters</td></tr><tr><td>str.charAt(i)</td><td>A char at index i, starting at 0</td></tr><tr><td>str.substring(start, end)</td><td>Characters from start up to, but excluding, end</td></tr><tr><td>str.substring(start)</td><td>Characters from start to the end</td></tr><tr><td>str.indexOf("a")</td><td>First match index, or -1 when absent</td></tr><tr><td>a.equals(b)</td><td>Whether String contents match</td></tr><tr><td>i % 2 == 0</td><td>Whether i is even</td></tr><tr><td>System.out.print(value)</td><td>Print without moving to a new line</td></tr><tr><td>System.out.println(value)</td><td>Print, then move to a new line</td></tr></tbody></table><p>Use double quotes for Strings (<code>"a"</code>) and single quotes for char values (<code>'a'</code>). Add a semicolon after assignments, return statements, and print statements.</p></details>
+ <details class="reference"><summary>About this practice runner and your progress</summary><p>This page runs a limited Java subset locally in your browser, rather than a full Java compiler. It supports method bodies with int, double, boolean, char, String, for, while, if / else, return, break, continue, arithmetic, assignments, and the String methods in the reference plus equalsIgnoreCase. String reference comparisons using == or != are intentionally rejected; compare contents with equals.</p><p>Write only the supplied method’s body. Classes, imports, extra methods, arrays, Scanner, objects, recursion, and other library methods are not supported. Use your normal Java environment for full compiler checks. Passing the checks confirms the listed cases; it is not a proof for every input.</p><p>Each run has execution and output limits. A loop that runs too long stops with an explanation. The trace shows the first 180 recorded events per test case. No code or results are sent to a server. Drafts and checks are saved on this browser when local storage is available; this is not a teacher gradebook. Download a summary when you want to keep or share your work.</p></details>
+ <div class="bottom-nav"><button id="prev-task">← Previous exercise</button><button id="next-task">Next exercise →</button></div>
+</div>
+</main>
+<footer><p>Loop Lab · Practice loop setup, bounds, updates, String accumulation, and nested loops.</p><p id="save-status">Drafts save on this browser. Keep a downloaded summary if you switch devices.</p></footer>
+<section id="print-summary" class="print-summary" aria-label="Printable practice summary"><h1>Loop Lab</h1><p class="print-course">AP Computer Science A · Practice summary</p><p id="print-name" class="print-name"></p><p id="print-total" class="print-total"></p><table><thead><tr><th scope="col">Exercise</th><th scope="col">Status</th></tr></thead><tbody id="print-exercises"></tbody></table><p class="print-footnote">Finished means the current code passed all built-in checks. This sheet reports practice progress; it does not establish correctness for every possible input.</p></section>
+<script>// A deliberately bounded Java method-body interpreter. Never evaluates user text as JavaScript.
+function createJavaRunner() {
+  const TYPES = new Set(['int','double','boolean','String','char']);
+  const fail = (n,m) => { throw new Error(`Line ${n?.line || 1}: ${m}`); };
+  function lex(s) {
+    const ts=[]; let i=0,line=1;
+    while(i<s.length) {
+      let c=s[i];
+      if (/\s/.test(c)) { if(c==='\n')line++; i++; continue; }
+      if(s.startsWith('//',i)){while(i<s.length&&s[i]!=='\n')i++;continue;}
+      if(s.startsWith('/*',i)){const at=line;i+=2;while(i<s.length&&!s.startsWith('*/',i)){if(s[i++]==='\n')line++;}if(i===s.length)fail({line:at},'Close the comment with */.');i+=2;continue;}
+      const at=line;
+      if(c==='"'||c==="'") {
+        const quote=c;let v='';i++;
+        while(i<s.length&&s[i]!==quote){
+          if(s[i]==='\n')fail({line:at},'A quoted value cannot cross a line. Use \\n for a newline.');
+          if(s[i]==='\\'){i++;const escapes={n:'\n',r:'\r',t:'\t',b:'\b',f:'\f','\\':'\\','"':'"',"'":"'"};if(!(s[i] in escapes))fail({line:at},'Unsupported escape sequence.');v+=escapes[s[i++]];}else v+=s[i++];
+        }
+        if(i===s.length)fail({line:at},'Close the quoted value.');i++;
+        if(quote==="'"&&v.length!==1)fail({line:at},'A char uses single quotes and contains exactly one character.');
+        ts.push({k:'lit',t:quote==='"'?'String':'char',v,line:at});continue;
+      }
+      const rest=s.slice(i), num=rest.match(/^\d+(?:\.\d+)?/), id=rest.match(/^[A-Za-z_$][\w$]*/);
+      if(num){if(/^0\d/.test(num[0])&&!num[0].includes('.'))fail({line},'Use decimal integer literals without leading zeros in this runner.');ts.push({k:'lit',t:num[0].includes('.')?'double':'int',v:Number(num[0]),line});i+=num[0].length;continue;}
+      if(id){const v=id[0];ts.push(v==='true'||v==='false'?{k:'lit',t:'boolean',v:v==='true',line}:{k:v,line});i+=v.length;continue;}
+      const op=['++','--','+=','-=','*=','/=','%=','==','!=','<=','>=','&&','||'].find(x=>s.startsWith(x,i));
+      if(op){ts.push({k:op,line});i+=op.length;continue;}
+      if('{}();,.?:+-*/%!=<>'.includes(c)){ts.push({k:c,line});i++;continue;}
+      fail({line},c==='['?'Arrays are outside this practice runner. Use String methods.':`Unsupported symbol ${JSON.stringify(c)}.`);
+    }
+    ts.push({k:'EOF',line});return ts;
+  }
+  function parse(code) {
+    const ts=lex(code);let p=0;
+    const peek=()=>ts[p], is=k=>peek().k===k, take=()=>ts[p++], eat=k=>is(k)?take():null;
+    const need=k=>{if(!is(k))fail(peek(),`Expected ${k}, found ${peek().k}.`);return take();};
+    function identifier(){const n=take();if(!/^[A-Za-z_$][\w$]*$/.test(n.k)||TYPES.has(n.k)||['for','while','if','else','return','break','continue','EOF'].includes(n.k))fail(n,'Expected a variable name.');return n;}
+    const prec={'=':1,'+=':1,'-=':1,'*=':1,'/=':1,'%=':1,'||':3,'&&':4,'==':5,'!=':5,'<':6,'>':6,'<=':6,'>=':6,'+':7,'-':7,'*':8,'/':8,'%':8};
+    function expr(min=1){
+      let n=take(),a;
+      if(n.k==='lit')a={kind:'lit',...n};
+      else if(n.k==='-'&&peek().k==='lit'&&peek().t==='int'&&peek().v===2147483648){take();a={kind:'lit',t:'int',v:-2147483648,line:n.line};}
+      else if(['!','-','+','++','--'].includes(n.k))a={kind:'un',op:n.k,a:expr(9),prefix:true,line:n.line};
+      else if(n.k==='('){
+        if(TYPES.has(peek().k)&&ts[p+1].k===')'){const t=take().k;take();a={kind:'cast',t,a:expr(9),line:n.line};}
+        else{a=expr();need(')');}
+      }else if(/^[A-Za-z_$][\w$]*$/.test(n.k)&&n.k!=='EOF')a={kind:'var',name:n.k,line:n.line};
+      else fail(n,'Expected a value, variable, or expression.');
+      while(true){
+        if(eat('.')){const m=identifier();need('(');let args=[];if(!is(')')){do{args.push(expr());}while(eat(','));}need(')');a={kind:'call',a,name:m.k,args,line:m.line};continue;}
+        if(is('++')||is('--')){const o=take();a={kind:'un',op:o.k,a,prefix:false,line:o.line};continue;}
+        if(is('?')&&min<=2){take();const yes=expr();need(':');a={kind:'ternary',a,yes,no:expr(2),line:a.line};continue;}
+        const op=peek().k,pr=prec[op];if(!pr||pr<min)break;take();const b=expr(pr+(pr===1?0:1));a={kind:pr===1?'assign':'bin',op,a,b,line:a.line};
+      }return a;
+    }
+    function decl(){const t=take();let items=[];do{const v=identifier();items.push({name:v.k,a:eat('=')?expr(2):null,line:v.line});}while(eat(','));return {kind:'decl',t:t.k,items,line:t.line};}
+    function list(){let items=[];if(!is(';')&&!is(')')){do{items.push(expr());}while(eat(','));}return items;}
+    function statement(){
+      const n=peek();
+      if(eat('{')){let items=[];while(!is('}')){if(is('EOF'))fail(n,'Close this block with }.');items.push(statement());}take();return {kind:'block',items,line:n.line};}
+      if(eat(';'))return {kind:'empty',line:n.line};
+      if(TYPES.has(n.k)){const d=decl();need(';');return d;}
+      if(eat('if')){need('(');const a=expr();need(')');const yes=statement(),no=eat('else')?statement():null;return {kind:'if',a,yes,no,line:n.line};}
+      if(eat('for')){need('(');const init=TYPES.has(peek().k)?decl():{kind:'list',items:list(),line:n.line};need(';');const a=is(';')?{kind:'lit',t:'boolean',v:true,line:n.line}:expr();need(';');const update=list();need(')');return {kind:'for',init,a,update,body:statement(),line:n.line};}
+      if(eat('while')){need('(');const a=expr();need(')');return {kind:'while',a,body:statement(),line:n.line};}
+      if(eat('return')){const a=is(';')?null:expr();need(';');return {kind:'return',a,line:n.line};}
+      if(eat('break')||eat('continue')){need(';');return {kind:n.k,line:n.line};}
+      if(n.k==='System'){
+        take();need('.');need('out');need('.');const m=take();if(!['print','println'].includes(m.k))fail(m,'Use System.out.print or System.out.println.');need('(');const a=is(')')?null:expr();need(')');need(';');if(!a&&m.k==='print')fail(m,'print needs a value.');return {kind:'print',a,newline:m.k==='println',line:n.line};
+      }
+      if(['public','static','private','class','void'].includes(n.k))fail(n,'Write only the method body. The method header and outer braces are supplied above and below the editor.');
+      const a=expr();need(';');return {kind:'expr',a,line:n.line};
+    }
+    const items=[];while(!is('EOF'))items.push(statement());return {kind:'block',items,line:1};
+  }
+  const numeric=t=>['int','double','char'].includes(t);
+  const compatible=(t,u)=>t===u||(t==='double'&&numeric(u))||(t==='int'&&u==='char');
+  const methodTypes={length:[[],'int'],charAt:[['int'],'char'],substring:[['int','int?'],'String'],indexOf:[['String|char|int','int?'],'int'],equals:[['any'],'boolean'],equalsIgnoreCase:[['String'],'boolean']};
+  function operationType(op,a,b,n){
+    if(op==='+'&&(a==='String'||b==='String'))return 'String';
+    if(['+','-','*','/','%'].includes(op)){if(!numeric(a)||!numeric(b))fail(n,`${op} needs numeric operands (or a String for +).`);return a==='double'||b==='double'?'double':'int';}
+    if(['<','>','<=','>='].includes(op)){if(!numeric(a)||!numeric(b))fail(n,'Compare numeric values here.');return 'boolean';}
+    if(['&&','||'].includes(op)){if(a!=='boolean'||b!=='boolean')fail(n,'&& and || need boolean expressions.');return 'boolean';}
+    if(['==','!='].includes(op)){
+      if(a==='String'||b==='String')fail(n,'For String contents, use .equals(...), or !...equals(...). String == compares references and is outside this runner. char values may use ==.');
+      if(!(numeric(a)&&numeric(b))&&!(a==='boolean'&&b==='boolean'))fail(n,'These values cannot be compared.');return 'boolean';
+    }
+    fail(n,`Unsupported operator ${op}.`);
+  }
+  function check(ast,params,ret) {
+    let scopes=[new Map(params.map(x=>[x.name,x.type]))],loops=0,used={for:0,while:0};
+    const lookup=n=>{for(let i=scopes.length-1;i>=0;i--)if(scopes[i].has(n.name))return scopes[i].get(n.name);fail(n,`Variable ${n.name} has not been declared in this scope.`);};
+    const condition=n=>{if(type(n)!=='boolean')fail(n,'A loop or if condition must be boolean.');};
+    function type(n){
+      if(n.kind==='lit'){if(n.t==='int'&&(n.v>2147483647||n.v<-2147483648))fail(n,'This literal is outside the Java int range.');return n.t;}
+      if(n.kind==='var')return lookup(n);
+      if(n.kind==='bin')return operationType(n.op,type(n.a),type(n.b),n);
+      if(n.kind==='assign'){
+        if(n.a.kind!=='var')fail(n,'Assign to a variable.');const t=type(n.a),u=type(n.b);
+        if(n.op==='='){if(!compatible(t,u)&&!(t==='char'&&u==='int'&&n.b.kind==='lit'&&n.b.v>=0&&n.b.v<=65535))fail(n,`Cannot assign ${u} to ${t}.`);}
+        else {const r=operationType(n.op[0],t,u,n);if(!(numeric(t)&&numeric(r))&&r!==t)fail(n,`Cannot store ${r} in ${t}.`);}return t;
+      }
+      if(n.kind==='un'){const t=type(n.a);if(n.op==='!'){if(t!=='boolean')fail(n,'! needs a boolean value.');return 'boolean';}if(!numeric(t))fail(n,'This operator needs a numeric value.');if(['++','--'].includes(n.op)&&n.a.kind!=='var')fail(n,'Increment or decrement a variable.');return ['++','--'].includes(n.op)?t:t==='char'?'int':t;}
+      if(n.kind==='cast'){const t=type(n.a);if(!(numeric(t)&&numeric(n.t))&&n.t!==t)fail(n,'Unsupported cast.');return n.t;}
+      if(n.kind==='ternary'){condition(n.a);const a=type(n.yes),b=type(n.no);if(a===b)return a;if(numeric(a)&&numeric(b))return a==='double'||b==='double'?'double':'int';fail(n,'Both alternatives need compatible types.');}
+      if(n.kind==='call'){
+        if(type(n.a)!=='String')fail(n,'Call String methods on a String variable or value.');const spec=methodTypes[n.name];if(!spec)fail(n,`The supported String methods are ${Object.keys(methodTypes).join(', ')}.`);
+        const args=n.args.map(type),form=spec[0],required=form.filter(x=>!x.endsWith('?')).length;
+        if(args.length<required||args.length>form.length)fail(n,`Check the number of arguments to ${n.name}.`);
+        args.forEach((t,i)=>{const f=form[i].replace('?','');if(f!=='any'&&!f.split('|').some(u=>compatible(u,t)))fail(n,`Argument ${i+1} of ${n.name} needs ${f}.`);});return spec[1];
+      }
+      fail(n,'Unsupported expression.');
+    }
+    function stmtExpr(n){if(!['assign','un'].includes(n.kind)||(n.kind==='un'&&!['++','--'].includes(n.op)))fail(n,'This is not a Java statement. Use an assignment, increment, or print statement.');type(n);}
+    function walk(n){
+      switch(n.kind){
+        case 'block':scopes.push(new Map());n.items.forEach(walk);scopes.pop();break;
+        case 'decl':n.items.forEach(x=>{if(scopes.some(s=>s.has(x.name)))fail(x,`Variable ${x.name} is already declared in an enclosing scope.`);if(x.a){const u=type(x.a);if(!compatible(n.t,u)&&!(n.t==='char'&&u==='int'&&x.a.kind==='lit'&&x.a.v>=0&&x.a.v<=65535))fail(x,`Cannot assign ${u} to ${n.t}.`);}scopes.at(-1).set(x.name,n.t);});break;
+        case 'expr':stmtExpr(n.a);break;
+        case 'print':if(n.a)type(n.a);break;
+        case 'if':condition(n.a);walk(n.yes);if(n.no)walk(n.no);break;
+        case 'for':used.for++;scopes.push(new Map());walk(n.init);condition(n.a);n.update.forEach(stmtExpr);loops++;walk(n.body);loops--;scopes.pop();break;
+        case 'while':used.while++;condition(n.a);loops++;walk(n.body);loops--;break;
+        case 'list':n.items.forEach(stmtExpr);break;
+        case 'return':if(ret==='void'){if(n.a)fail(n,'This void method prints; use return; with no value if needed.');}else{if(!n.a)fail(n,`Return a ${ret} value.`);if(!compatible(ret,type(n.a)))fail(n,`Return a ${ret} value.`);}break;
+        case 'break':case 'continue':if(!loops)fail(n,`${n.kind} must be inside a loop.`);break;
+      }
+    }
+    walk(ast);return used;
+  }
+  function execute(ast,params,args,ret,traceOn=false) {
+    const scopes=[new Map()],trace=[];let steps=0,output='',lastLine=1,trimmed=false;
+    const V=(t,v)=>({t,v});
+    const number=x=>x.t==='char'?x.v.charCodeAt(0):x.v;
+    const string=x=>x.t==='double'&&Number.isInteger(x.v)?x.v+'.0':String(x.v);
+    const coerce=(t,x)=>{if(t==='String'||t==='boolean')return V(t,x.v);let v=number(x);if(x.t==='double'&&(t==='int'||t==='char'))v=Number.isNaN(v)?0:Math.max(-2147483648,Math.min(2147483647,Math.trunc(v)));if(t==='char')return V(t,String.fromCharCode(v&65535));if(t==='int')v=Math.trunc(v)|0;return V(t,v);};
+    params.forEach((p,i)=>scopes[0].set(p.name,{t:p.type,value:V(p.type,args[i]),set:true}));
+    const tick=n=>{lastLine=n.line;if(++steps>60000)fail(n,'Execution limit reached. Check the loop condition and update; the loop may never finish.');};
+    const cell=n=>{for(let i=scopes.length-1;i>=0;i--)if(scopes[i].has(n.name))return scopes[i].get(n.name);fail(n,`Variable ${n.name} is outside its scope.`);};
+    const record=(n,event)=>{if(!traceOn)return;if(trace.length>=180){trimmed=true;return;}const vars=Object.create(null);for(const s of scopes)for(const [k,v]of s)vars[k]=v.set?string(v.value):'(not initialized)';trace.push({line:n.line,event,vars,output:output.slice(0,2000)});};
+    function calc(op,x,y,n){
+      const t=operationType(op,x.t,y.t,n);let a=number(x),b=number(y),v;
+      if(t==='String'){const s=string(x)+string(y);if(s.length>20000)fail(n,'String size limit reached. Check how much your loop appends.');return V(t,s);}
+      if(op==='+')v=a+b;else if(op==='-')v=a-b;else if(op==='*')v=t==='int'?Math.imul(a,b):a*b;
+      else if(op==='/'){if(b===0&&t==='int')fail(n,'Cannot divide an int by zero.');v=t==='int'?Math.trunc(a/b):a/b;}
+      else if(op==='%'){if(b===0&&t==='int')fail(n,'Cannot take an int remainder with zero.');v=a%b;}
+      else if(op==='==')v=x.v===y.v||numeric(x.t)&&numeric(y.t)&&a===b;
+      else if(op==='!=')v=!(x.v===y.v||numeric(x.t)&&numeric(y.t)&&a===b);
+      else if(op==='<')v=a<b;else if(op==='>')v=a>b;else if(op==='<=')v=a<=b;else if(op==='>=')v=a>=b;
+      else if(op==='&&')v=x.v&&y.v;else if(op==='||')v=x.v||y.v;
+      return V(t,t==='int'?v|0:v);
+    }
+    function value(n){
+      tick(n);
+      switch(n.kind){
+        case 'lit':return V(n.t,n.t==='int'?n.v|0:n.v);
+        case 'var':{const c=cell(n);if(!c.set)fail(n,`Initialize ${n.name} before using it.`);return c.value;}
+        case 'bin':{const a=value(n.a);if(n.op==='&&'&&!a.v)return V('boolean',false);if(n.op==='||'&&a.v)return V('boolean',true);return calc(n.op,a,value(n.b),n);}
+        case 'assign':{const c=cell(n.a);const old=n.op==='='?null:value(n.a),b=value(n.b);c.value=coerce(c.t,n.op==='='?b:calc(n.op[0],old,b,n));c.set=true;record(n,`${n.a.name} updated`);return c.value;}
+        case 'un':{const a=value(n.a);if(n.op==='!')return V('boolean',!a.v);if(n.op==='+'||n.op==='-'){const t=a.t==='char'?'int':a.t;return coerce(t,V(t,n.op==='-'?-number(a):number(a)));}const c=cell(n.a);c.value=coerce(c.t,V(a.t==='double'?'double':'int',number(a)+(n.op==='++'?1:-1)));record(n,`${n.a.name} ${n.op}`);return n.prefix?c.value:a;}
+        case 'cast':return coerce(n.t,value(n.a));
+        case 'ternary':return value(n.a).v?value(n.yes):value(n.no);
+        case 'call':{
+          const s=value(n.a).v,vs=n.args.map(value),xs=vs.map(x=>x.v);let r;
+          if(n.name==='length')r=V('int',s.length);
+          if(n.name==='equals'||n.name==='equalsIgnoreCase')r=V('boolean',vs[0].t==='String'&&(n.name==='equals'?s===xs[0]:s.toLowerCase()===xs[0].toLowerCase()));
+          if(n.name==='indexOf'){if(numeric(vs[0].t)&&(number(vs[0])<0||number(vs[0])>0x10ffff))r=V('int',-1);else{const search=numeric(vs[0].t)?String.fromCodePoint(number(vs[0])):xs[0];r=V('int',s.indexOf(search,vs.length>1?number(vs[1]):0));}}
+          if(n.name==='charAt'){const i=number(vs[0]);if(i<0||i>=s.length)fail(n,`charAt(${i}) is out of bounds for length ${s.length}. Valid indices are 0 through ${s.length-1}.`);r=V('char',s.charAt(i));}
+          if(n.name==='substring'){const a=number(vs[0]),b=vs.length===2?number(vs[1]):s.length;if(a<0||b>s.length||a>b)fail(n,`substring(${a}, ${b}) is out of bounds for length ${s.length}. The end is exclusive; require 0 <= start <= end <= length.`);r=V('String',s.slice(a,b));}return r;
+        }
+      }
+    }
+    function run(n){
+      tick(n);
+      switch(n.kind){
+        case 'block':{scopes.push(new Map());try{for(const x of n.items){const r=run(x);if(r)return r;}}finally{scopes.pop();}break;}
+        case 'decl':for(const x of n.items){const v=x.a?coerce(n.t,value(x.a)):null;scopes.at(-1).set(x.name,{t:n.t,value:v,set:!!x.a});record(x,`${x.name} declared`);}break;
+        case 'expr':value(n.a);break;
+        case 'list':n.items.forEach(value);break;
+        case 'print':{output+=(n.a?string(value(n.a)):'')+(n.newline?'\n':'');if(output.length>20000)fail(n,'Output size limit reached. Check how often your loop prints.');record(n,n.newline?'println':'print');break;}
+        case 'if':{const b=value(n.a).v;record(n,`if condition: ${b}`);return b?run(n.yes):n.no?run(n.no):null;}
+        case 'return':{const v=n.a?coerce(ret,value(n.a)):null;record(n,'return');return {signal:'return',value:v};}
+        case 'break':case 'continue':return {signal:n.kind};
+        case 'for':{
+          scopes.push(new Map());try{run(n.init);while(true){const b=value(n.a).v;record(n,`for condition: ${b}`);if(!b)break;const r=run(n.body);if(r?.signal==='return')return r;if(r?.signal==='break')break;n.update.forEach(value);}}finally{scopes.pop();}break;
+        }
+        case 'while':while(true){const b=value(n.a).v;record(n,`while condition: ${b}`);if(!b)break;const r=run(n.body);if(r?.signal==='return')return r;if(r?.signal==='break')break;}break;
+      }return null;
+    }
+    let result;
+    try{const r=run(ast);if(ret!=='void'&&r?.signal!=='return')fail({line:lastLine},`The method finished without returning a ${ret}.`);result={value:r?.value?.v,output,trace,trimmed,steps};}
+    catch(e){result={error:e.message,output,trace,trimmed,steps};}return result;
+  }
+  function prepare(code,params,ret){const ast=parse(code),used=check(ast,params,ret);return {ast,used};}
+  return {prepare,execute};
+}
+if(typeof module!=='undefined')module.exports=createJavaRunner;
+</script>
+<script>const P=(name,type)=>({name,type});
+const S=name=>P(name,'String'), I=name=>P(name,'int');
+const range=(n)=>Array.from({length:n},(_,i)=>i);
+const tasks=[
+ {id:'sumOdds',title:'Add the odd numbers',group:'Loop foundations',level:'Start here',ret:'int',params:[I('n')],desc:'Return the sum of the positive odd integers from 1 through n, inclusive. n is between 0 and 100. Build the sum with a loop.',tests:[[7],[1],[0],[8],[15]],oracle:n=>range(n+1).filter(x=>x%2===1).reduce((a,b)=>a+b,0),hints:['Which variable stores the running total? What should its starting value be?','Start the loop at 1. Decide whether to advance by 2 or test each number for oddness.','Include n when n is odd. Return the total after the loop ends.'],starter:'int sum = 0;\n// Write your loop here.\n\nreturn sum;'},
+ {id:'stepThree',title:'Count by threes',group:'Loop foundations',level:'Start here',ret:'void',params:[I('limit')],required:'while',desc:'Use a while loop to print 0, 3, 6, … while the value is less than limit. Print one number per line. limit is between 0 and 100.',tests:[[10],[1],[0],[9],[16]],oracle:n=>range(n).filter(x=>x%3===0).map(x=>x+'\n').join(''),hints:['Declare the counter before the while loop.','The condition uses < limit. Think about whether to print before or after updating.','Each pass must advance the counter by 3.'],starter:'int i = 0;\n// Write a while loop here.\n'},
+ {id:'stringTimes',title:'Repeat a string',group:'Loop foundations',level:'Start here',ret:'String',params:[S('str'),I('n')],desc:'Return n copies of str joined together. n is between 0 and 10. Use a loop; no arrays or built-in repetition methods.',tests:[['Hi',3],['Java',1],['Hi',0],['',4],['a b',2]],oracle:(s,n)=>s.repeat(n),hints:['Start a String accumulator as "".','You need exactly n repetitions. The string length is not your loop bound.','Append the whole str during each pass, then return the accumulator.']},
+ {id:'printLetters',title:'One character per line',group:'String algorithms',level:'Build confidence',ret:'void',params:[S('str')],desc:'Print every character of str on its own line, in order. Spaces are characters too. Use charAt or substring with a loop.',tests:[['Java'],['a'],[''],['A B']],oracle:s=>s.split('').map(c=>c+'\n').join(''),hints:['The first index is 0.','The last valid character index is str.length() - 1.','println moves to a new line. substring(i, i + 1) extracts one character.']},
+ {id:'doubleChar',title:'Double every character',group:'String algorithms',level:'Build confidence',ret:'String',params:[S('str')],desc:'Return a new string containing two copies of each character of str. Keep characters in their original order.',tests:[['Java'],['Hi-There'],['a'],[''],['A B']],oracle:s=>s.split('').map(c=>c+c).join(''),hints:['Traverse all indices from 0 through length - 1.','On each pass, append the current character twice.','With charAt, append twice or combine with a String. Two char values added together produce a number in Java.']},
+ {id:'stringBits',title:'Keep every other character',group:'String algorithms',level:'Build confidence',ret:'String',params:[S('str')],desc:'Keep the characters at indices 0, 2, 4, … and return them as a new string.',tests:[['Hello'],['Heeololeo'],['ab'],['a'],['']],oracle:s=>s.split('').filter((_,i)=>i%2===0).join(''),hints:['The first character you keep has index 0.','You can advance by 2, or use a remainder check while advancing by 1.','Test both even and odd lengths so the final index stays in bounds.']},
+ {id:'reverse',title:'Reverse a string',group:'String algorithms',level:'Build confidence',ret:'String',params:[S('str')],desc:'Return str in reverse order using a loop. Do not use library reversal methods.',tests:[['loop'],['Java!'],['x'],[''],['A B']],oracle:s=>s.split('').reverse().join(''),hints:['One option is to start at the last valid index.','When moving backward, you still need to include index 0.','Append each character to the result. An alternative is to scan forward and prepend each character.']},
+ {id:'stringSplosion',title:'Build growing prefixes',group:'String algorithms',level:'Combine ideas',ret:'String',params:[S('str')],desc:'Join every nonempty prefix of str, from shortest to longest. For "Code", return "CCoCodCode". An empty input returns "".',tests:[['Code'],['abc'],['ab'],['a'],['']],oracle:s=>range(s.length).map(i=>s.slice(0,i+1)).join(''),hints:['The start index of each prefix stays at 0.','The exclusive end index grows from 1 through str.length().','Append each prefix to a running String result.']},
+ {id:'repeatFront',title:'Build shrinking prefixes',group:'String algorithms',level:'Combine ideas',ret:'String',params:[S('str'),I('n')],desc:'Join the first n characters, then the first n - 1 characters, and so on through the first character. 0 <= n <= str.length(). Example: ("Chocolate", 4) returns "ChocChoChC".',tests:[['Chocolate',4],['Ice Cream',2],['abc',3],['abc',0],['',0]],oracle:(s,n)=>range(n).map(i=>s.slice(0,n-i)).join(''),hints:['The number of characters in the first prefix is n.','Decrease the prefix length by 1 on each pass.','Stop before a prefix length of 0. substring(0, length) uses an exclusive end.']},
+ {id:'reverseRemove',title:'Reverse and skip',group:'String algorithms',level:'Combine ideas',ret:'String',params:[S('str')],desc:'Starting with the last character, move backward two positions at a time and join the visited characters. For "abcdef", return "fdb"; for "abcde", return "eca".',tests:[['abcdef'],['abcde'],['ab'],['a'],['']],oracle:s=>s.split('').reverse().filter((_,i)=>i%2===0).join(''),hints:['Start at str.length() - 1, even when the length is even.','Move backward by 2 instead of 1.','Keep going while the index is at least 0.']},
+ {id:'removeLetter',title:'Filter out a letter',group:'String algorithms',level:'Combine ideas',ret:'String',params:[S('str'),S('letter')],desc:'Return str with every occurrence of letter removed. letter is a one-character String. Comparisons are case-sensitive. Scan the string with a loop.',tests:[['banana','a'],['Mississippi','s'],['abc','x'],['aaaa','a'],['','a'],['AaA','A']],oracle:(s,l)=>s.split(l).join(''),hints:['Build a new String containing only characters you keep.','Extract one character as a substring and compare with .equals(letter).','Append only when the current character does not equal letter.']},
+ {id:'removeLetterSearch',title:'Remove with repeated searches',group:'String algorithms',level:'Combine ideas',ret:'String',params:[S('str'),S('letter')],required:'while',desc:'Remove every occurrence of a one-character letter using a while loop and indexOf. Preserve the other characters in order. Do not use replace methods.',tests:[['banana','a'],['Mississippi','s'],['abc','x'],['aaaa','a'],['','a']],oracle:(s,l)=>s.split(l).join(''),hints:['indexOf returns -1 when there is no match.','After finding a match at p, you can keep the part before p and remove that character with substring(p + 1).','Update the searched string and the match position each time, so the while loop makes progress.']},
+ {id:'countSpaces',title:'Count spaces with while',group:'String algorithms',level:'Combine ideas',ret:'int',params:[S('str')],required:'while',desc:'Use a while loop to count the space characters in str. Repeated indexOf searches or a character-by-character scan are both valid. Count all spaces, including leading, trailing, and repeated spaces.',tests:[['AP Computer Science'],['noSpaces'],[' a  b '],['   '],['']],oracle:s=>s.split('').filter(c=>c===' ').length,hints:['Start the count at 0.','If using indexOf, skip past the found space before searching again. If scanning, advance the index every pass.','A successful search is any position >= 0, including position 0.']},
+ {id:'compareStrings',title:'Keep matches, mark differences',group:'String algorithms',level:'Quiz practice',ret:'String',params:[S('a'),S('b')],desc:'a and b have equal lengths. At each index, keep the character if the strings match there; otherwise append "X". Example: ("pixel", "panel") returns "pXXel".',tests:[['pixel','panel'],['abc','abc'],['abc','xyz'],['',''],['A B','A-B']],oracle:(a,b)=>a.split('').map((c,i)=>c===b[i]?c:'X').join(''),hints:['One index can access the same position in both strings.','charAt values may be compared with ==. Use .equals for substrings.','Append exactly one character per pass, using if / else.']},
+ {id:'mixString',title:'Interleave two strings',group:'String algorithms',level:'Quiz practice',ret:'String',params:[S('a'),S('b')],desc:'Take one character from a, then one from b, repeatedly. Append all leftover characters of the longer string. Example: ("Hi", "There") returns "HTihere".',tests:[['abc','xyz'],['Hi','There'],['abcd','XY'],['','abc'],['abc',''],['','']],oracle:(a,b)=>range(Math.max(a.length,b.length)).map(i=>(a[i]||'')+(b[i]||'')).join(''),hints:['These strings may have different lengths.','Loop long enough to visit the longer string. Before accessing either string, check its own bound.','Use two independent if statements so a pass can append a character from both strings.']},
+ {id:'reverseThird',title:'Reverse, then mark every third',group:'String algorithms',level:'Stretch',ret:'String',params:[S('str')],desc:'Reverse str, then replace positions 3, 6, 9, … of that reversed order with "0" (count positions starting at 1). For "abcdefg", return "gf0dc0a". Use a loop; an empty input returns "".',tests:[['abcdefg'],['abc'],['ab'],['Computer'],['']],oracle:s=>s.split('').reverse().map((c,i)=>(i+1)%3===0?'0':c).join(''),hints:['Distinguish the original string index from the position in the result.','When scanning backward, result position 1 corresponds to original index length - 1.','Use a remainder check for every third result position, and append either "0" or the visited character.']},
+ {id:'growPattern',title:'Print a growing triangle',group:'Nested loops',level:'Quiz practice',ret:'void',params:[I('rows')],nested:true,required:'for',desc:'Use nested for loops. For rows = 4, print lines "1", "1 2", "1 2 3", "1 2 3 4". Each row ends with a newline. rows is between 0 and 8. One space separates numbers; a trailing space on a line is accepted.',tests:[[4],[1],[0],[6]],oracle:n=>range(n).map(i=>range(i+1).map(j=>j+1).join(' ')+'\n').join(''),hints:['The outer loop chooses the row, from 1 through rows.','The inner loop prints the integers from 1 through the current row.','Place println() after the inner loop, inside the outer loop.']},
+ {id:'shrinkPattern',title:'Print a shrinking triangle',group:'Nested loops',level:'Quiz practice',ret:'void',params:[I('rows')],nested:true,required:'for',desc:'Use nested for loops. For rows = 4, print lines "1 2 3 4", "1 2 3", "1 2", "1". Each row ends with a newline. rows is between 0 and 8. One space separates numbers; trailing spaces are accepted.',tests:[[4],[1],[0],[5]],oracle:n=>range(n).map(i=>range(n-i).map(j=>j+1).join(' ')+'\n').join(''),hints:['The outer row length starts at rows and decreases.','The inner counter starts again at 1 for each row.','Finish the row with println() after printing all its numbers.']},
+ {id:'repeatDigits',title:'Print decreasing repetitions',group:'Nested loops',level:'Quiz practice',ret:'void',params:[I('rows')],nested:true,desc:'Use nested loops. For rows = 4, print "1111", "222", "33", "4", each on its own line, with no spaces. In row r, print the digit r exactly rows - r + 1 times. 0 <= rows <= 9.',tests:[[4],[1],[0],[5]],oracle:n=>range(n).map(i=>String(i+1).repeat(n-i)+'\n').join(''),hints:['The outer counter chooses the digit to print.','Each row prints one fewer character than the previous row.','The inner loop repeats print(r); println() belongs after that loop.']},
+ {id:'parityPairs',title:'Print pairs with an even sum',group:'Nested loops',level:'Stretch',ret:'void',params:[I('n')],nested:true,desc:'For each outer from 0 through n - 1, visit inner from outer through n - 1. Print a pair only when outer + inner is even. Print each pair as outer + ":" + inner on its own line. For n = 3, output lines "0:0", "0:2", "1:1", "2:2". 0 <= n <= 8.',tests:[[3],[1],[0],[4]],oracle:n=>range(n).map(o=>range(n-o).map(k=>k+o).filter(i=>(o+i)%2===0).map(i=>o+':'+i+'\n').join('')).join(''),hints:['The inner loop begins at the current outer value.','Test (outer + inner) % 2 == 0 inside the inner loop.','A String between the numbers prevents numeric addition while you build the printed pair.']}
+];
+tasks.forEach(t=>{
+ t.starter??=t.ret==='String'?'String result = "";\n// Write your loop here.\n\nreturn result;':t.ret==='int'?'int count = 0;\n// Write your loop here.\n\nreturn count;':'// Write your loops here.\n';
+ t.signature=`public static ${t.ret} ${t.id}(${t.params.map(p=>p.type+' '+p.name).join(', ')})`;
+});
+if(typeof module!=='undefined')module.exports=tasks;
+</script>
+<script>const $=id=>document.getElementById(id);
+const storageKey='loop-lab-v1';let state={},current=0,runResults=[],worker=null,timer=null,escapeTab=false,storageOK=true;
+try{const old=JSON.parse(localStorage.getItem(storageKey)||'{}');if(old&&typeof old==='object'&&!Array.isArray(old))state=old;}catch{storageOK=false;}
+tasks.forEach(t=>{const s=state[t.id];state[t.id]={code:typeof s?.code==='string'?s.code:t.starter,attempts:Number.isInteger(s?.attempts)?Math.max(0,s.attempts):0,passed:!!s?.passed,hints:Number.isInteger(s?.hints)?Math.min(3,Math.max(0,s.hints)):0,choice:['either','for','while'].includes(s?.choice)?s.choice:'either',last:s?.last||''};});
+function save(){try{localStorage.setItem(storageKey,JSON.stringify(state));}catch{storageOK=false;}if(!storageOK){$('storage-message').hidden=false;$('storage-message').textContent='Browser saving is unavailable. Your work is kept while this page stays open; download a summary before closing.';$('save-status').textContent='Download a summary to keep your work. Browser saving is unavailable.';}}
+function task(){return tasks[current];}
+function datum(v){return typeof v==='string'?JSON.stringify(v):String(v);}
+function inputLabel(t,args){return `${t.id}(${args.map(datum).join(', ')})`;}
+function textNode(tag,txt,cls){const e=document.createElement(tag);e.textContent=txt;if(cls)e.className=cls;return e;}
+function renderNav(){
+ const filter=$('filter').value,nav=$('task-list');nav.replaceChildren();let last='';
+ tasks.forEach((t,i)=>{if(filter!=='all'&&filter!==t.group)return;if(t.group!==last){nav.append(textNode('div',t.group,'group-name'));last=t.group;}const b=document.createElement('button');b.className='task-nav';b.setAttribute('aria-current',i===current?'true':'false');b.append(textNode('span',state[t.id].passed?'✓':String(i+1).padStart(2,'0'),'nav-num'+(state[t.id].passed?' done':'')),textNode('span',t.title));if(state[t.id].passed)b.setAttribute('aria-label',t.title+', checks passed');b.onclick=()=>choose(i,true);nav.append(b);});
+ const n=tasks.filter(t=>state[t.id].passed).length;$('progress').value=n;$('progress-label').textContent=`${n} of ${tasks.length} checked`;
+}
+function setStatus(txt,style=''){const e=$('status');e.textContent=txt;e.className='status'+(style?' '+style:'');}
+function lines(){const n=$('code').value.split('\n').length;$('gutter').textContent=Array.from({length:n},(_,i)=>i+1).join('\n');$('gutter').scrollTop=$('code').scrollTop;}
+function renderHints(){const t=task(),n=state[t.id].hints;$('hint-box').hidden=n===0;$('hint-box').replaceChildren();for(let i=0;i<n;i++)$('hint-box').append(textNode('p',`${i+1}. ${t.hints[i]}`));$('hint-count').textContent=n?`${n} of 3 hints opened`:'Optional support, one hint at a time.';$('hint').textContent=n===3?'All hints opened':n===0?'Show a hint':'Show another hint';$('hint').disabled=n===3;}
+function clearFeedback(){runResults=[];$('results').replaceChildren();$('trace-case').replaceChildren();$('trace-view').hidden=true;$('trace-empty').hidden=false;$('trace-empty').textContent='Run your code to inspect the executed lines and variable values.';}
+function choose(i,focus=false){
+ stopRun(false);current=i;const t=task(),s=state[t.id];renderNav();$('task-number').textContent=`Exercise ${String(i+1).padStart(2,'0')} / ${tasks.length} · ${t.group}`;$('task-title').textContent=t.title;$('task-level').textContent=t.level;$('task-desc').textContent=t.desc;$('signature').textContent=t.signature+' {';$('code').value=s.code;lines();clearFeedback();
+ setStatus(s.passed?'Your current draft passed its checks. Run it again to inspect the results and trace.':'Write a loop, then run the checks. Use the trace to inspect your bounds and updates.',s.passed?'good':'');
+ $('reset-dialog').hidden=true;$('custom-error').textContent='';$('prev-task').disabled=i===0;$('next-task').disabled=i===tasks.length-1;
+ $('loop-choice').value=t.required||s.choice;$('loop-choice').disabled=!!t.required;
+ $('examples').replaceChildren();t.tests.slice(0,3).forEach(a=>{const e=textNode('div','','example');e.append(textNode('code',inputLabel(t,a)),textNode('code',(t.ret==='void'?'prints ':'returns ')+datum(t.oracle(...a)),'expected'));$('examples').append(e);});
+ $('custom-fields').replaceChildren();t.params.forEach((p,j)=>{const label=document.createElement('label');label.textContent=`${p.name} (${p.type})`;const f=document.createElement('input');f.id='param-'+j;f.type=p.type==='int'?'number':'text';if(p.type==='int'){f.step=1;f.min=0;f.max=100;}f.value=t.tests[0][j];f.autocomplete='off';f.setAttribute('aria-label',p.name+' custom input');label.append(f);$('custom-fields').append(label);});renderHints();
+ if(focus)$('task-title').focus({preventScroll:true});
+}
+function changed(){stopRun(false);const s=state[task().id];s.code=$('code').value;s.passed=false;s.last='Code changed; checks pending.';save();renderNav();lines();clearFeedback();setStatus('Code changed. Run the checks to test this draft.');}
+$('code').addEventListener('input',changed);$('code').addEventListener('scroll',()=>{$('gutter').scrollTop=$('code').scrollTop;});
+function normalAt(code,end){let mode='normal';for(let i=0;i<end;i++){const c=code[i],n=code[i+1];if(mode==='line'){if(c==='\n')mode='normal';continue;}if(mode==='block'){if(c==='*'&&n==='/'){mode='normal';i++;}continue;}if(mode==='"'||mode==="'"){if(c==='\\')i++;else if(c===mode)mode='normal';continue;}if(c==='/'&&n==='/'){mode='line';i++;}else if(c==='/'&&n==='*'){mode='block';i++;}else if(c==='"'||c==="'")mode=c;}return mode==='normal';}
+function insert(value,start=$('code').selectionStart,end=$('code').selectionEnd,caret=start+value.length){
+ const e=$('code');e.focus();e.setSelectionRange(start,end);const before=e.value;
+ if(!document.execCommand('insertText',false,value)||e.value===before){e.setRangeText(value,start,end,'end');changed();}
+ e.setSelectionRange(caret,caret);lines();
+}
+$('code').addEventListener('keydown',e=>{
+ const el=e.currentTarget,start=el.selectionStart,end=el.selectionEnd,s=el.value;
+ if(e.isComposing||e.key==='Process')return;
+ if((e.ctrlKey||e.metaKey)&&e.key==='Enter'){e.preventDefault();startRun(false);return;}
+ if(e.key==='Escape'){escapeTab=true;return;}
+ if(e.key==='Tab'){
+  if(escapeTab||!$('tab-indent').checked){escapeTab=false;return;}e.preventDefault();
+  if(start===end&&!e.shiftKey){insert('    ');return;}
+  const a=s.lastIndexOf('\n',start-1)+1,b=end===start?end:end>0&&s[end-1]==='\n'?end-1:end;
+  const finish=s.indexOf('\n',b),z=finish<0?s.length:finish;const selected=s.slice(a,z),rows=selected.split('\n');
+  const output=rows.map(x=>e.shiftKey?x.replace(/^ {1,4}/,''):'    '+x).join('\n');insert(output,a,z,a+output.length);el.setSelectionRange(a,a+output.length);return;
+ }
+ escapeTab=false;
+ if(e.ctrlKey||e.metaKey||e.altKey)return;
+ const normal=normalAt(s,start);
+ if(e.key==='{'&&$('pair-braces').checked&&normal){e.preventDefault();const selected=s.slice(start,end);insert('{'+selected+'}',start,end,start+1+selected.length);return;}
+ if(e.key==='}'&&$('pair-braces').checked&&normal&&start===end&&s[start]==='}'){e.preventDefault();el.setSelectionRange(start+1,start+1);return;}
+ if(e.key==='}'&&$('auto-indent').checked&&normal){const a=s.lastIndexOf('\n',start-1)+1,left=s.slice(a,start);if(/^ {4,}$/.test(left)){e.preventDefault();insert('}',start-4,end);return;}}
+ if(e.key==='Backspace'&&$('pair-braces').checked&&normal&&start===end&&s[start-1]==='{'&&s[start]==='}'){e.preventDefault();insert('',start-1,start+1);return;}
+ if(e.key==='Enter'&&$('auto-indent').checked){
+  e.preventDefault();const a=s.lastIndexOf('\n',start-1)+1,left=s.slice(a,start),base=(left.match(/^\s*/)||[''])[0].replace(/\n/g,''),opens=normal&&left.trimEnd().endsWith('{');const pad=base+(opens?'    ':'');
+  const rest=s.slice(end),m=rest.match(/^ *}/);if(opens&&m){const until=end+m[0].length-1;insert('\n'+pad+'\n'+base,start,until,start+1+pad.length);}else insert('\n'+pad,start,end);return;
+ }
+});
+$('filter').onchange=()=>{const f=$('filter').value;if(f!=='all'&&task().group!==f)choose(tasks.findIndex(t=>t.group===f));else renderNav();};
+$('hint').onclick=()=>{state[task().id].hints++;save();renderHints();};
+$('reset').onclick=()=>{$('reset-dialog').hidden=false;$('reset-confirm').focus();};$('reset-cancel').onclick=()=>{$('reset-dialog').hidden=true;$('reset').focus();};$('reset-confirm').onclick=()=>{$('code').value=task().starter;changed();$('reset-dialog').hidden=true;$('code').focus();};
+$('prev-task').onclick=()=>choose(current-1,true);$('next-task').onclick=()=>choose(current+1,true);
+$('loop-choice').onchange=()=>{state[task().id].choice=$('loop-choice').value;state[task().id].passed=false;save();renderNav();clearFeedback();setStatus('Loop practice choice changed. Run the checks again.');};
+function tab(view){for(const v of ['output','trace']){const b=$(v+'-tab'),on=v===view;b.setAttribute('aria-selected',on?'true':'false');b.tabIndex=on?0:-1;$(v+'-panel').hidden=!on;}}
+$('output-tab').onclick=()=>tab('output');$('trace-tab').onclick=()=>tab('trace');for(const v of ['output','trace'])$(v+'-tab').onkeydown=e=>{if(['ArrowLeft','ArrowRight','Home','End'].includes(e.key)){e.preventDefault();const next=e.key==='Home'?'output':e.key==='End'?'trace':v==='output'?'trace':'output';tab(next);$(next+'-tab').focus();}};
+function busy(on){$('run').disabled=on;$('custom-run').disabled=on;$('print-summary-button').disabled=on;$('stop').hidden=!on;$('run').textContent=on?'Running…':'▶ Run checks';}
+function stopRun(announce=true){if(!worker)return;worker.terminate();worker=null;clearTimeout(timer);busy(false);if(announce)setStatus('Run stopped. Check whether the loop condition can become false.','bad');}
+$('stop').onclick=()=>stopRun();
+const workerCode=`${createJavaRunner.toString()}
+onmessage = function(e) {
+ try {
+  const {code,params,ret,cases,choice,nested}=e.data;
+  const runner=createJavaRunner(), p=runner.prepare(code,params,ret);
+  let depth=0,forDepth=0,whileDepth=0;
+  function scan(n,d=0,fd=0,wd=0){if(!n||typeof n!=='object')return;if(n.kind==='for'||n.kind==='while'){d++;if(n.kind==='for')fd++;else wd++;depth=Math.max(depth,d);forDepth=Math.max(forDepth,fd);whileDepth=Math.max(whileDepth,wd);}for(const [k,v] of Object.entries(n)){if(k==='line')continue;if(Array.isArray(v))v.forEach(x=>scan(x,d,fd,wd));else if(v&&typeof v==='object')scan(v,d,fd,wd);}}
+  scan(p.ast);
+  let shape='';if(p.used.for+p.used.while===0)shape='This exercise needs a loop. Write a for or while loop to build the result.';
+  else if(choice!=='either'&&!p.used[choice])shape='For this practice, use a '+choice+' loop.';
+  if(nested&&(depth<2||choice==='for'&&forDepth<2||choice==='while'&&whileDepth<2))shape='This exercise needs nested '+(choice==='either'?'loops':choice+' loops')+'. Place one loop inside another.';
+  if(shape){postMessage({error:shape});return;}
+  postMessage({results:cases.map(a=>runner.execute(p.ast,params,a,ret,true))});
+ }catch(err){postMessage({error:err.message});}
+};`;
+function customValues(){
+ const t=task(),a=t.params.map((p,i)=>{const s=$('param-'+i).value;if(p.type==='int'){if(!/^-?\d+$/.test(s))throw Error(`${p.name} needs a whole number.`);return Number(s);}if(s.length>80)throw Error('Use strings of at most 80 characters for custom tests.');return s;});
+ t.params.forEach((p,i)=>{if(p.type==='int'){let max=100;if(p.name==='rows')max=t.id==='repeatDigits'?9:8;if(t.id==='stringTimes')max=10;if(t.id==='parityPairs')max=8;if(a[i]<0||a[i]>max)throw Error(`${p.name} must be between 0 and ${max}.`);}});
+ if(t.id==='repeatFront'&&a[1]>a[0].length)throw Error('n must be at most str.length().');
+ if(t.params.some(p=>p.name==='letter')&&a[1].length!==1)throw Error('letter must be a one-character String.');
+ if(t.id==='compareStrings'&&a[0].length!==a[1].length)throw Error('a and b must have equal lengths.');return a;
+}
+function normalizeOutput(s){return s.replace(/\r\n/g,'\n').split('\n').map(x=>x.replace(/[ \t]+$/,'')).join('\n');}
+function startRun(custom){
+ if(worker)return;const t=task(),s=state[t.id];let cases;
+ try{cases=custom?[customValues()]:t.tests;}catch(e){$('custom-error').textContent=e.message;return;}
+ $('custom-error').textContent='';clearFeedback();tab('output');const code=$('code').value;if(code.length>12000){setStatus('Keep this exercise’s method body under 12,000 characters.','bad');return;}
+ if(!custom){s.attempts++;s.passed=false;s.last='Checks running.';save();renderNav();}setStatus(custom?'Running your custom input…':'Running the test cases…');busy(true);
+ try{const blob=new Blob([workerCode],{type:'text/javascript'}),url=URL.createObjectURL(blob);worker=new Worker(url);URL.revokeObjectURL(url);}catch{busy(false);setStatus('This browser blocked the local code runner. Open the downloaded HTML file in Chrome, Edge, or Firefox.','bad');return;}
+ timer=setTimeout(()=>{stopRun(false);setStatus('Run stopped after the time limit. Check your condition and update for an infinite loop.','bad');s.last='Execution timed out.';save();},5000);
+ worker.onerror=e=>{stopRun(false);setStatus('The local runner could not finish: '+e.message,'bad');};
+ worker.onmessage=e=>{
+  stopRun(false);if(e.data.error){setStatus(e.data.error,'bad');if(!custom){s.last=e.data.error;save();}return;}
+  runResults=e.data.results.map((r,i)=>{const expected=t.oracle(...cases[i]),actual=t.ret==='void'?r.output:r.value,flexible=['growPattern','shrinkPattern'].includes(t.id),pass=!r.error&&(flexible?normalizeOutput(actual)===normalizeOutput(expected):actual===expected);return {...r,args:cases[i],expected,actual,pass};});
+  const n=runResults.filter(r=>r.pass).length,all=n===runResults.length;
+  if(!custom){s.passed=all;s.last=`${n}/${runResults.length} checks passed`;save();renderNav();}
+  const firstError=runResults.find(r=>r.error)?.error;
+  setStatus(custom?(all?'Custom input matched. Try another boundary case.':'Custom input did not match. Compare the values below.'):(all?`All ${n} checks passed. Explain why your loop stops, then try your own input.`:`${n} of ${runResults.length} checks passed. Inspect a mismatch or open the trace.`)+(firstError?'\n'+firstError:''),all?'good':'bad');renderResults(t,custom);renderTraceChoices(t); 
+ };
+ worker.postMessage({code,params:t.params,ret:t.ret,cases,choice:t.required||$('loop-choice').value,nested:!!t.nested});
+}
+$('run').onclick=()=>startRun(false);$('custom-run').onclick=()=>startRun(true);
+function renderResults(t,custom){
+ $('results').replaceChildren();runResults.forEach((r,i)=>{const row=textNode('div','','result-row'),head=textNode('div','','result-heading');head.append(textNode('span',custom?'Custom input':'Case '+(i+1)),textNode('span',r.pass?'✓ Matched':r.error?'! Error':'× Mismatch',r.pass?'check':'miss'));row.append(head,textNode('code',inputLabel(t,r.args)));const d=document.createElement('details');d.open=!r.pass;d.append(textNode('summary','Compare expected and actual'));
+  d.append(textNode('div',t.ret==='void'?'Expected printed output':'Expected return value'),textNode('pre',t.ret==='void'?r.expected||'(no output)':datum(r.expected)));
+  d.append(textNode('div',t.ret==='void'?'Your printed output':'Your return value'),textNode('pre',r.error?r.error:t.ret==='void'?r.output||'(no output)':datum(r.value)));
+  if(t.ret==='void')d.append(textNode('code','Output as quoted text: '+JSON.stringify(r.output)+'\nExpected: '+JSON.stringify(r.expected)));
+  else if(r.output)d.append(textNode('div','Debug output'),textNode('pre',r.output));row.append(d);$('results').append(row);
+ });
+}
+function renderTraceChoices(t){$('trace-case').replaceChildren();runResults.forEach((r,i)=>{const o=document.createElement('option');o.value=i;o.textContent=inputLabel(t,r.args);$('trace-case').append(o);});$('trace-case').value='0';resetTrace();}
+function resetTrace(){const r=runResults[Number($('trace-case').value)];const ok=r?.trace?.length>0;$('trace-view').hidden=!ok;$('trace-empty').hidden=ok;$('trace-slider').max=ok?r.trace.length-1:0;$('trace-slider').value=0;renderTrace();}
+function renderTrace(){const r=runResults[Number($('trace-case').value)];if(!r?.trace?.length)return;const i=Number($('trace-slider').value),e=r.trace[i];$('trace-count').textContent=`Step ${i+1} of ${r.trace.length}`;$('trace-prev').disabled=i===0;$('trace-next').disabled=i===r.trace.length-1;$('trace-line').textContent=`Body line ${e.line} · ${e.event}`;$('trace-vars').replaceChildren();for(const [k,v]of Object.entries(e.vars)){const row=document.createElement('tr');row.append(textNode('td',k),textNode('td',v));$('trace-vars').append(row);}$('trace-output').textContent=e.output||'(no printed output yet)';$('trace-note').textContent=r.trimmed?'Trace limited to the first 180 events; execution continued.':r.error?'Execution stopped: '+r.error:'Trace records declarations, updates, conditions, printing, and returns.';}
+$('trace-case').onchange=resetTrace;$('trace-slider').oninput=renderTrace;$('trace-prev').onclick=()=>{$('trace-slider').value=Number($('trace-slider').value)-1;renderTrace();};$('trace-next').onclick=()=>{$('trace-slider').value=Number($('trace-slider').value)+1;renderTrace();};
+$('export').onclick=()=>{
+ const checked=tasks.filter(t=>state[t.id].passed).length,name=$('student-name').value.trim();let report=`LOOP LAB — PRACTICE SUMMARY\n${name?'Name: '+name+'\n':''}${checked} of ${tasks.length} current drafts pass the built-in checks.\nGenerated locally. Passing checks is not a full compiler check or proof for all inputs.\n\n`;
+ tasks.forEach((t,i)=>{const s=state[t.id];report+=`${i+1}. ${t.title}\n${s.passed?'Checks passed':'Not yet checked / needs revision'} | Runs: ${s.attempts} | Hints opened: ${s.hints}\nPractice choice: ${t.required||s.choice}\nLast built-in result: ${s.last||'No run yet'}\n${t.signature} {\n${s.code.split('\n').map(x=>'    '+x).join('\n')}\n}\n\n`;});
+ const url=URL.createObjectURL(new Blob([report],{type:'text/plain;charset=utf-8'})),a=document.createElement('a');a.href=url;a.download='loop-lab-practice-summary.txt';document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1000);
+};
+function buildPrintSummary(){
+ const name=$('student-name').value.trim(),finished=tasks.filter(t=>state[t.id].passed).length;
+ $('print-name').textContent='Name: '+(name||'________________________________');
+ $('print-total').textContent=`${finished} of ${tasks.length} exercises finished`;
+ $('print-exercises').replaceChildren();
+ tasks.forEach((t,i)=>{const done=state[t.id].passed,row=document.createElement('tr');if(done)row.className='print-finished';row.append(textNode('td',`${i+1}. ${t.title}`),textNode('td',done?'Finished':'Not finished'));$('print-exercises').append(row);});
+}
+$('student-name').addEventListener('input',()=>{$('student-name').setCustomValidity('');});
+$('print-summary-button').onclick=()=>{
+ const field=$('student-name');field.setCustomValidity(field.value.trim()?'':'Enter your name for the summary sheet.');if(!field.reportValidity())return;
+ buildPrintSummary();window.print();
+};
+window.addEventListener('beforeprint',buildPrintSummary);
+save();choose(0);
+</script>
+</body>
+</html>

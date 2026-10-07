@@ -1,0 +1,151 @@
+LOOP LAB — TEACHER GUIDE
+AP Computer Science A | for loops, while loops, and String algorithms
+
+OPEN THE PAGE
+Open loop-lab.html in a current browser, such as Chrome, Edge, or Firefox.
+The student page is one self-contained file. It works offline and needs no
+account, Java installation, external editor library, or server.
+If your LMS previews HTML without allowing scripts, students should download
+the file and open it in their browser. This draft has not been published or
+placed in an LMS.
+
+WHAT STUDENTS DO
+Choose one of 20 exercises, write the body of the supplied Java method,
+and select Run checks. The method signature and outer braces are supplied
+outside the editable body so students can focus on writing loops.
+
+Typing { automatically inserts }. Enter after { indents four spaces and
+places the paired closing brace on its own line. Typing an existing paired
+closing brace moves past it. Pairing and indentation can be turned off.
+Tab indents; Esc followed by Tab leaves the editor. Ctrl+Enter / Command+Enter
+runs checks. Arrow keys move between the Results and Trace tabs.
+
+Students see the expected return value or printed output for every listed
+test, alongside their result. Syntax, type, bounds, and execution errors are
+reported with method-body line numbers. The trace shows declarations,
+updates, loop conditions, if decisions, printing, and returns, with variable
+values and output at each event. It records the first 180 events per case.
+An execution limit and a separate timeout prevent runaway loops from
+freezing the page. Optional hints appear one at a time. No worked Java
+solutions or teacher answer keys are embedded in the student page.
+
+The Practice with menu lets students try either loop form on flexible tasks.
+Some prompts deliberately require while or nested for loops. Checks verify
+that the requested loop structure is present; they do not establish that
+the student has chosen an efficient or general algorithm.
+
+PRACTICE PATH
+1–3: running sum, while-loop stepping, and repeating a String.
+4–7: printing characters, doubling, skipping, and reversing.
+8–13: growing/shrinking prefixes, reverse-and-skip, filtering letters,
+      repeated searches, and counting spaces.
+14–16: comparing, interleaving unequal-length strings, and a reversal
+       variation that marks every third position.
+17–20: growing/shrinking triangles, repeated digits, and parity-filtered pairs.
+
+All student exercises use primitive values and Strings. None requires arrays.
+Empty Strings, absent matches, repeated matches, zero iterations, and
+unequal string lengths appear where they are valid inputs to the prompt.
+Pattern tasks accept trailing spaces only where the prompt says so.
+
+SUGGESTED CLASSROOM USE
+Start with exercises 1–3, then have students choose a String task related
+to an error they made on the quiz. Before running, ask students to identify:
+  • the starting index or counter;
+  • the condition and final valid value;
+  • the update that moves toward stopping;
+  • the accumulator and where it must be declared.
+After a mismatch, have them inspect the first relevant trace event, revise,
+and explain the change. Students ready to transfer their reasoning can
+rewrite a flexible task with the other loop form or try nested loops.
+Useful exit question: “Which input exposes an off-by-one error in this task,
+and why does your revised loop handle it?”
+
+PROGRESS AND EVIDENCE
+Drafts, built-in run counts, opened-hint counts, and current passing status
+save in that browser when local storage is allowed. Edits invalidate the
+exercise’s passing status. Custom tests do not mark an exercise complete.
+Students can download a text summary containing their code and progress.
+Beside the download button, students can enter their name and select Print
+summary to open the browser print dialog. The one-page sheet lists all 20
+exercises as Finished or Not finished and shows the total finished. Finished
+means the current draft passed all built-in checks. Printing omits code and
+the editor. A name entered here is also included in the downloaded summary;
+the name is not saved in browser storage or sent to a server.
+Nothing is sent to a server, and the page does not send names or results to a server or provide
+a teacher dashboard. Local progress is not a gradebook. On shared devices,
+use separate browser profiles or manage browser site data; keep a downloaded
+summary before switching browsers, devices, or copies of the file.
+
+RUNNER LIMITS
+This is a browser-based Java subset interpreter, not a complete Java compiler.
+It parses and executes the student's code; it does not simply match answers
+or translate arbitrary Java code into JavaScript.
+
+Supported: int, double, boolean, char, String; declarations and assignments;
+arithmetic and remainder; comparisons and boolean logic; increment/decrement;
+casts among numeric types; conditional expressions; for and while; if/else;
+return, break, continue; print and println; length, charAt, substring,
+indexOf, equals, and equalsIgnoreCase. Java int division and overflow,
+character arithmetic, scope, and String index bounds are modeled.
+
+Unsupported: classes, imports, additional methods, constructors, arrays,
+Scanner, object creation, recursion, do/while, and other library methods.
+String == and != are intentionally rejected with an explanation to use
+equals for content comparison. This page does not model String reference
+identity. Some full-Java compile-time analyses, such as definite assignment
+across every possible path and unreachable-code analysis, are not complete.
+Use the normal Java environment when assessing full compiler validity.
+Passing the supplied cases does not prove correctness for every input.
+
+SOURCES AND ADAPTATIONS
+Inspected the text and embedded code examples in all four supplied PDFs:
+  • Sch U2 WS5 KEY.pdf: doubleChar, stringTimes, stringBits, stringSplosion,
+    and mixString.
+  • Sch U2 WS6 (Quiz Rev) KEY.pdf: repeatFront, reverseRemove, removeLetter
+    via scanning/searching, one-character-per-line output, and nested patterns.
+  • Quiz 2.7-2.11 Ver A KEY.pdf: while progress, indexOf, bounds, growing
+    patterns, reversal variations, and parity checks in nested loops.
+  • Quiz 2.7-2.11 Ver B KEY.pdf: odd-number accumulation, for/while conversion,
+    counting spaces, shrinking patterns, and comparing strings by position.
+
+These sources were treated as examples of difficulty and prior exposure,
+not as instructions to submit screenshots, upload to Schoology, or publish.
+The teacher's stated focus and “no arrays” requirement control this draft.
+The learning goals are loop initialization, termination, updates, String
+accumulation, valid character bounds, and coordinating nested loops. No
+additional formal standards alignment or mastery claim is made.
+
+Examples and method-body practice were adapted rather than copied verbatim.
+Foundational stepping/reversal exercises and the new stretch variation are
+design choices to provide a progression. Minor answer-key syntax errors
+were not reproduced. The quiz's reverse3 wording, sample, and code do not
+agree consistently about replacement positions. Exercise 16 therefore uses
+an explicit new rule: reverse first, then mark positions 3, 6, 9, ... of the
+reversed output, counting from 1. It is a variation, not a reproduction of
+that key. Exercise 19 generalizes the review worksheet's repeated-digit
+pattern; exercise 20 adapts parity checks using unambiguous colon-separated
+pairs. The page does not include the original quiz answer keys.
+
+Java behavior was checked against Oracle's primary references:
+https://docs.oracle.com/javase/8/docs/api/java/lang/String.html
+https://docs.oracle.com/javase/specs/jls/se8/html/jls-15.html
+
+VERIFICATION
+97 built-in cases passed against representative student solutions and
+matched the installed Java compiler/VM, allowing platform newline differences.
+Additional interpreter checks covered arithmetic, char/String behavior,
+scope, malformed syntax, bounds, missing initialization, and execution limits.
+Browser checks covered all 20 exercises, brace pairing, Enter indentation,
+Tab exit, saved drafts, changing-code invalidation, custom inputs, trace,
+hints, downloadable summaries, and desktop/mobile layout. Keyboard controls,
+form labels, focus indicators, readable feedback, and responsive layout were
+reviewed; this is not an accessibility certification. School-managed browser
+policies and LMS previews have not been tested.
+
+SUGGESTED NEXT STEP
+Open the student file on a school Chromebook or computer and try exercises
+2, 5, and 17 to sample while, String traversal, and nested-loop practice.
+Then choose the first few exercises you want students to complete. The task
+bank and UI are editable in the HTML file if you want different prompts,
+more scaffolded starters, or different test cases.
