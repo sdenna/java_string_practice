@@ -42,7 +42,7 @@
 <div class="content">
  <section class="prompt" aria-labelledby="task-title"><div class="prompt-head"><span id="task-number" class="eyebrow"></span><span id="task-level" class="badge"></span></div><h2 id="task-title" tabindex="-1"></h2><p id="task-desc"></p><div id="examples" class="examples"></div><div class="hint-actions"><button id="hint">Show a hint</button><span id="hint-count" class="progress-text">Optional support, one hint at a time.</span></div><div id="hint-box" hidden></div></section>
  <div class="lab">
-  <section class="editor-panel" aria-label="Java code editor"><div class="panel-bar"><span><span class="dot" aria-hidden="true"></span>Method body · Java</span><button id="reset">Reset code</button></div><div id="reset-dialog" hidden>Replace this exercise’s code with its starter?<br><button id="reset-confirm">Replace code</button><button id="reset-cancel">Keep my code</button></div><div id="signature" class="method-line"></div><div class="editor-wrap"><pre id="gutter" class="gutter" aria-hidden="true">1</pre><textarea id="code" aria-label="Java method body" aria-describedby="editor-help" wrap="off" spellcheck="false" autocapitalize="off" autocomplete="off" autocorrect="off"></textarea></div><div class="method-line closing">}</div><div class="editor-options"><label><input id="pair-braces" type="checkbox" checked>Close braces automatically</label><label><input id="auto-indent" type="checkbox" checked>Auto-indent</label><label><input id="tab-indent" type="checkbox" checked>Tab indents</label></div><div class="run-bar"><button id="run" class="primary">▶ Run checks</button><button id="stop" class="stop" hidden>Stop</button><label for="loop-choice" class="eyebrow">Practice with</label><select id="loop-choice"><option value="either">Either loop</option><option value="for">for loops</option><option value="while">while loops</option></select><span id="editor-help" class="shortcut">Write only the body. Ctrl / ⌘ + Enter runs. Esc, then Tab moves out of the editor.</span></div></section>
+  <section class="editor-panel" aria-label="Java code editor"><div class="panel-bar"><span><span class="dot" aria-hidden="true"></span>Method body · Java</span><button id="reset">Reset code</button></div><div id="reset-dialog" hidden>Replace this exercise’s code with its starter?<br><button id="reset-confirm">Replace code</button><button id="reset-cancel">Keep my code</button></div><div id="signature" class="method-line"></div><div class="editor-wrap"><pre id="gutter" class="gutter" aria-hidden="true">1</pre><textarea id="code" aria-label="Java method body" aria-describedby="editor-help" wrap="off" spellcheck="false" autocapitalize="off" autocomplete="off" autocorrect="off"></textarea></div><div class="method-line closing">}</div><div class="editor-options"><label><input id="pair-braces" type="checkbox" checked>Close braces automatically</label><label><input id="auto-indent" type="checkbox" checked>Auto-indent</label><label><input id="tab-indent" type="checkbox" checked>Tab indents</label></div><div class="run-bar"><button id="run" class="primary">▶ Run checks</button><button id="stop" class="stop" hidden>Stop</button><label for="loop-choice" class="eyebrow">Practice with</label><select id="loop-choice"><option value="either">Either loop</option><option value="for">for loops</option><option value="while">while loops</option></select><span id="editor-help" class="shortcut">Write only the body. Type sout + Enter for System.out.println();. Ctrl / ⌘ + Enter runs. Esc, then Tab moves out of the editor.</span></div></section>
   <section class="feedback" aria-label="Run results"><div class="panel-bar"><span>Check your thinking</span><div role="tablist" aria-label="Feedback views"><button id="output-tab" class="tab" role="tab" aria-selected="true" aria-controls="output-panel">Results</button><button id="trace-tab" class="tab" role="tab" aria-selected="false" aria-controls="trace-panel" tabindex="-1">Trace</button></div></div><div class="feedback-body"><div id="status" class="status" role="status" aria-live="polite">Write a loop, then run the checks. Start with a small input and watch what changes.</div><div id="output-panel" role="tabpanel" aria-labelledby="output-tab"><div id="results"></div></div><div id="trace-panel" role="tabpanel" aria-labelledby="trace-tab" hidden><label for="trace-case">Trace a test input</label><select id="trace-case" class="trace-select"></select><div id="trace-empty">Run your code to inspect the executed lines and variable values.</div><div id="trace-view" hidden><div class="trace-control"><button id="trace-prev" aria-label="Previous trace step">←</button><span id="trace-count" class="progress-text"></span><button id="trace-next" aria-label="Next trace step">→</button></div><label class="eyebrow" for="trace-slider">Execution step</label><input id="trace-slider" type="range" min="0" max="0" value="0"><p id="trace-line" class="trace-line"></p><table><caption class="eyebrow">Variables at this step</caption><thead><tr><th scope="col">Variable</th><th scope="col">Value</th></tr></thead><tbody id="trace-vars"></tbody></table><p class="eyebrow">Printed output so far</p><pre id="trace-output"></pre><p id="trace-note" class="progress-text"></p></div></div></div></section>
  </div>
  <details class="custom"><summary>Try your own input</summary><p>Strings are entered without quotation marks. Try an empty string, a boundary value, or an input that might expose an off-by-one error. Custom runs do not mark an exercise complete.</p><div id="custom-fields"></div><button id="custom-run">Run custom input</button><p id="custom-error" role="status"></p></details>
@@ -192,18 +192,33 @@ function createJavaRunner() {
     walk(ast);return used;
   }
   function execute(ast,params,args,ret,traceOn=false) {
-    const scopes=[new Map()],trace=[];let steps=0,output='',lastLine=1,trimmed=false;
+    const scopes=[new Map()],trace=[],activeLoops=[];let steps=0,output='',lastLine=1,trimmed=false;
     const V=(t,v)=>({t,v});
     const number=x=>x.t==='char'?x.v.charCodeAt(0):x.v;
     const string=x=>x.t==='double'&&Number.isInteger(x.v)?x.v+'.0':String(x.v);
     const coerce=(t,x)=>{if(t==='String'||t==='boolean')return V(t,x.v);let v=number(x);if(x.t==='double'&&(t==='int'||t==='char'))v=Number.isNaN(v)?0:Math.max(-2147483648,Math.min(2147483647,Math.trunc(v)));if(t==='char')return V(t,String.fromCharCode(v&65535));if(t==='int')v=Math.trunc(v)|0;return V(t,v);};
     params.forEach((p,i)=>scopes[0].set(p.name,{t:p.type,value:V(p.type,args[i]),set:true}));
-    const tick=n=>{lastLine=n.line;if(++steps>60000)fail(n,'Execution limit reached. Check the loop condition and update; the loop may never finish.');};
+    function loopFeedback(reason) {
+      const loop=activeLoops.at(-1);
+      if(!loop)return reason+' Too much work was performed in this run.';
+      const names=new Set();
+      function collect(n){if(!n||typeof n!=='object')return;if(n.kind==='var')names.add(n.name);for(const v of Object.values(n)){if(Array.isArray(v))v.forEach(collect);else if(v&&typeof v==='object')collect(v);}}
+      collect(loop.node.a);
+      const values=[];
+      for(const name of names){for(let i=scopes.length-1;i>=0;i--){const c=scopes[i].get(name);if(c){values.push(name+' = '+(c.set?JSON.stringify(c.value.v):'(not initialized)'));break;}}}
+      return reason+' Possible infinite loop in the '+loop.node.kind+' loop at body line '+loop.node.line+'.'
+        +'\nThis loop has started '+loop.passes+' passes. The run was stopped to keep the page responsive.'
+        +(values.length?'\nCurrent condition variables: '+values.join(', ')+'.':'')
+        +'\nCheck that the condition can become false. '+(loop.node.kind==='while'?'Update the counter inside the loop on every path, including before continue.':'Check the update in the for header and whether the body resets the counter.')
+        +' Check the update direction and bounds; for nested loops, reset the inner counter for each outer pass.'
+        +'\nA large finite loop can also reach this limit. Try a smaller custom input, then use the trace to inspect the condition and updates.';
+    }
+    const tick=n=>{lastLine=n.line;if(++steps>60000)fail(n,loopFeedback('Execution limit reached.'));};
     const cell=n=>{for(let i=scopes.length-1;i>=0;i--)if(scopes[i].has(n.name))return scopes[i].get(n.name);fail(n,`Variable ${n.name} is outside its scope.`);};
     const record=(n,event)=>{if(!traceOn)return;if(trace.length>=180){trimmed=true;return;}const vars=Object.create(null);for(const s of scopes)for(const [k,v]of s)vars[k]=v.set?string(v.value):'(not initialized)';trace.push({line:n.line,event,vars,output:output.slice(0,2000)});};
     function calc(op,x,y,n){
       const t=operationType(op,x.t,y.t,n);let a=number(x),b=number(y),v;
-      if(t==='String'){const s=string(x)+string(y);if(s.length>20000)fail(n,'String size limit reached. Check how much your loop appends.');return V(t,s);}
+      if(t==='String'){const s=string(x)+string(y);if(s.length>20000)fail(n,loopFeedback('String size limit reached. Check how much each pass appends.'));return V(t,s);}
       if(op==='+')v=a+b;else if(op==='-')v=a-b;else if(op==='*')v=t==='int'?Math.imul(a,b):a*b;
       else if(op==='/'){if(b===0&&t==='int')fail(n,'Cannot divide an int by zero.');v=t==='int'?Math.trunc(a/b):a/b;}
       else if(op==='%'){if(b===0&&t==='int')fail(n,'Cannot take an int remainder with zero.');v=a%b;}
@@ -240,14 +255,14 @@ function createJavaRunner() {
         case 'decl':for(const x of n.items){const v=x.a?coerce(n.t,value(x.a)):null;scopes.at(-1).set(x.name,{t:n.t,value:v,set:!!x.a});record(x,`${x.name} declared`);}break;
         case 'expr':value(n.a);break;
         case 'list':n.items.forEach(value);break;
-        case 'print':{output+=(n.a?string(value(n.a)):'')+(n.newline?'\n':'');if(output.length>20000)fail(n,'Output size limit reached. Check how often your loop prints.');record(n,n.newline?'println':'print');break;}
+        case 'print':{output+=(n.a?string(value(n.a)):'')+(n.newline?'\n':'');if(output.length>20000)fail(n,loopFeedback('Output size limit reached. Check how often each pass prints.'));record(n,n.newline?'println':'print');break;}
         case 'if':{const b=value(n.a).v;record(n,`if condition: ${b}`);return b?run(n.yes):n.no?run(n.no):null;}
         case 'return':{const v=n.a?coerce(ret,value(n.a)):null;record(n,'return');return {signal:'return',value:v};}
         case 'break':case 'continue':return {signal:n.kind};
         case 'for':{
-          scopes.push(new Map());try{run(n.init);while(true){const b=value(n.a).v;record(n,`for condition: ${b}`);if(!b)break;const r=run(n.body);if(r?.signal==='return')return r;if(r?.signal==='break')break;n.update.forEach(value);}}finally{scopes.pop();}break;
+          scopes.push(new Map());const loop={node:n,passes:0};activeLoops.push(loop);try{run(n.init);while(true){const b=value(n.a).v;record(n,`for condition: ${b}`);if(!b)break;loop.passes++;const r=run(n.body);if(r?.signal==='return')return r;if(r?.signal==='break')break;n.update.forEach(value);}}finally{activeLoops.pop();scopes.pop();}break;
         }
-        case 'while':while(true){const b=value(n.a).v;record(n,`while condition: ${b}`);if(!b)break;const r=run(n.body);if(r?.signal==='return')return r;if(r?.signal==='break')break;}break;
+        case 'while':{const loop={node:n,passes:0};activeLoops.push(loop);try{while(true){const b=value(n.a).v;record(n,`while condition: ${b}`);if(!b)break;loop.passes++;const r=run(n.body);if(r?.signal==='return')return r;if(r?.signal==='break')break;}}finally{activeLoops.pop();}break;}
       }return null;
     }
     let result;
@@ -313,7 +328,7 @@ function choose(i,focus=false){
  setStatus(s.passed?'Your current draft passed its checks. Run it again to inspect the results and trace.':'Write a loop, then run the checks. Use the trace to inspect your bounds and updates.',s.passed?'good':'');
  $('reset-dialog').hidden=true;$('custom-error').textContent='';$('prev-task').disabled=i===0;$('next-task').disabled=i===tasks.length-1;
  $('loop-choice').value=t.required||s.choice;$('loop-choice').disabled=!!t.required;
- $('examples').replaceChildren();t.tests.slice(0,3).forEach(a=>{const e=textNode('div','','example');e.append(textNode('code',inputLabel(t,a)),textNode('code',(t.ret==='void'?'prints ':'returns ')+datum(t.oracle(...a)),'expected'));$('examples').append(e);});
+ $('examples').replaceChildren();t.tests.slice(0,3).forEach(a=>{const e=textNode('div','','example');e.append(textNode('code',inputLabel(t,a)),textNode('code',(t.ret==='void'?'prints:\n'+(t.oracle(...a)||'(no output)'):'returns '+datum(t.oracle(...a))),'expected'));$('examples').append(e);});
  $('custom-fields').replaceChildren();t.params.forEach((p,j)=>{const label=document.createElement('label');label.textContent=`${p.name} (${p.type})`;const f=document.createElement('input');f.id='param-'+j;f.type=p.type==='int'?'number':'text';if(p.type==='int'){f.step=1;f.min=0;f.max=100;}f.value=t.tests[0][j];f.autocomplete='off';f.setAttribute('aria-label',p.name+' custom input');label.append(f);$('custom-fields').append(label);});renderHints();
  if(focus)$('task-title').focus({preventScroll:true});
 }
@@ -344,6 +359,10 @@ $('code').addEventListener('keydown',e=>{
  if(e.key==='}'&&$('pair-braces').checked&&normal&&start===end&&s[start]==='}'){e.preventDefault();el.setSelectionRange(start+1,start+1);return;}
  if(e.key==='}'&&$('auto-indent').checked&&normal){const a=s.lastIndexOf('\n',start-1)+1,left=s.slice(a,start);if(/^ {4,}$/.test(left)){e.preventDefault();insert('}',start-4,end);return;}}
  if(e.key==='Backspace'&&$('pair-braces').checked&&normal&&start===end&&s[start-1]==='{'&&s[start]==='}'){e.preventDefault();insert('',start-1,start+1);return;}
+ if(e.key==='Enter'&&start===end&&normal&&s.slice(0,start).endsWith('sout')&&!(s[start]&&/[\w$]/.test(s[start]))){
+  const from=start-4;
+  if(from===0||!/[\w$.]/.test(s[from-1])){e.preventDefault();insert('System.out.println();',from,start,from+'System.out.println('.length);return;}
+ }
  if(e.key==='Enter'&&$('auto-indent').checked){
   e.preventDefault();const a=s.lastIndexOf('\n',start-1)+1,left=s.slice(a,start),base=(left.match(/^\s*/)||[''])[0].replace(/\n/g,''),opens=normal&&left.trimEnd().endsWith('{');const pad=base+(opens?'    ':'');
   const rest=s.slice(end),m=rest.match(/^ *}/);if(opens&&m){const until=end+m[0].length-1;insert('\n'+pad+'\n'+base,start,until,start+1+pad.length);}else insert('\n'+pad,start,end);return;
@@ -357,7 +376,7 @@ $('loop-choice').onchange=()=>{state[task().id].choice=$('loop-choice').value;st
 function tab(view){for(const v of ['output','trace']){const b=$(v+'-tab'),on=v===view;b.setAttribute('aria-selected',on?'true':'false');b.tabIndex=on?0:-1;$(v+'-panel').hidden=!on;}}
 $('output-tab').onclick=()=>tab('output');$('trace-tab').onclick=()=>tab('trace');for(const v of ['output','trace'])$(v+'-tab').onkeydown=e=>{if(['ArrowLeft','ArrowRight','Home','End'].includes(e.key)){e.preventDefault();const next=e.key==='Home'?'output':e.key==='End'?'trace':v==='output'?'trace':'output';tab(next);$(next+'-tab').focus();}};
 function busy(on){$('run').disabled=on;$('custom-run').disabled=on;$('print-summary-button').disabled=on;$('stop').hidden=!on;$('run').textContent=on?'Running…':'▶ Run checks';}
-function stopRun(announce=true){if(!worker)return;worker.terminate();worker=null;clearTimeout(timer);busy(false);if(announce)setStatus('Run stopped. Check whether the loop condition can become false.','bad');}
+function stopRun(announce=true){if(!worker)return;worker.terminate();worker=null;clearTimeout(timer);busy(false);if(announce)setStatus('Run stopped. If the loop was not finishing, check that its condition can become false and that its counter updates on every pass. Use a small input and the trace to inspect the changes.','bad');}
 $('stop').onclick=()=>stopRun();
 const workerCode=`${createJavaRunner.toString()}
 onmessage = function(e) {
@@ -388,7 +407,7 @@ function startRun(custom){
  $('custom-error').textContent='';clearFeedback();tab('output');const code=$('code').value;if(code.length>12000){setStatus('Keep this exercise’s method body under 12,000 characters.','bad');return;}
  if(!custom){s.attempts++;s.passed=false;s.last='Checks running.';save();renderNav();}setStatus(custom?'Running your custom input…':'Running the test cases…');busy(true);
  try{const blob=new Blob([workerCode],{type:'text/javascript'}),url=URL.createObjectURL(blob);worker=new Worker(url);URL.revokeObjectURL(url);}catch{busy(false);setStatus('This browser blocked the local code runner. Open the downloaded HTML file in Chrome, Edge, or Firefox.','bad');return;}
- timer=setTimeout(()=>{stopRun(false);setStatus('Run stopped after the time limit. Check your condition and update for an infinite loop.','bad');s.last='Execution timed out.';save();},5000);
+ timer=setTimeout(()=>{stopRun(false);const message='Run stopped after 5 seconds: possible infinite loop or too much work. Check that each loop counter moves toward its stopping bound, that the body does not reset it, and that continue does not skip a needed update. For nested loops, reset the inner counter at the start of each outer pass. Try a smaller custom input and run again.';setStatus(message,'bad');s.last=message;save();},5000);
  worker.onerror=e=>{stopRun(false);setStatus('The local runner could not finish: '+e.message,'bad');};
  worker.onmessage=e=>{
   stopRun(false);if(e.data.error){setStatus(e.data.error,'bad');if(!custom){s.last=e.data.error;save();}return;}
@@ -405,7 +424,7 @@ function renderResults(t,custom){
  $('results').replaceChildren();runResults.forEach((r,i)=>{const row=textNode('div','','result-row'),head=textNode('div','','result-heading');head.append(textNode('span',custom?'Custom input':'Case '+(i+1)),textNode('span',r.pass?'✓ Matched':r.error?'! Error':'× Mismatch',r.pass?'check':'miss'));row.append(head,textNode('code',inputLabel(t,r.args)));const d=document.createElement('details');d.open=!r.pass;d.append(textNode('summary','Compare expected and actual'));
   d.append(textNode('div',t.ret==='void'?'Expected printed output':'Expected return value'),textNode('pre',t.ret==='void'?r.expected||'(no output)':datum(r.expected)));
   d.append(textNode('div',t.ret==='void'?'Your printed output':'Your return value'),textNode('pre',r.error?r.error:t.ret==='void'?r.output||'(no output)':datum(r.value)));
-  if(t.ret==='void')d.append(textNode('code','Output as quoted text: '+JSON.stringify(r.output)+'\nExpected: '+JSON.stringify(r.expected)));
+  if(t.ret==='void')d.append(textNode('div','Each output line is shown above. Spaces and final newlines are checked as part of the output.','progress-text'));
   else if(r.output)d.append(textNode('div','Debug output'),textNode('pre',r.output));row.append(d);$('results').append(row);
  });
 }
